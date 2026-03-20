@@ -1,0 +1,95 @@
+{
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "Si pudiera tener uno de estos superpoderes inútiles, ¿cuál elegiría?",
+      "opciones": [
+        "Que el semáforo siempre se ponga en verde al llegar.",
+        "Que nunca se me acabe la batería del móvil (siempre al 100%).",
+        "Poder hablar con las palomas (pero que solo hablen de cotilleos del barrio).",
+        "Que la comida a domicilio siempre llegue en 5 minutos y caliente."
+      ],
+      "correctaIndex": 1,
+      "tiempoSegundos": 60
+    },
+    {
+      "id": 2,
+      "pregunta": "Estoy en una fiesta donde no conozco a casi nadie. ¿Qué es lo primero que haría?",
+      "opciones": [
+        "Me pongo a bailar en medio de la sala",
+        "Me voy directo a la mesa de la comida/bebida para disimular",
+        "Empieza a hablar con un desconocido sobre cualquier tontería",
+        "Busca al perro o gato de la casa para hacerse amigo suyo"
+      ],
+      "correctaIndex": 3,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 3,
+      "pregunta": "Aparece una cucaracha enorme en el salón. ¿Cuál es mi reacción inmediata?",
+      "opciones": [
+        "La reviento de un zapatillazo porque soy un macho de pelo en pecho",
+        "Grito despavorido y me subo al sofá a esperar a que tú, mi princesa azul, me salves",
+        "Intento atraparla con un vaso como un intrépido para liberar a la pobre criatura por la ventana",
+        "Conmigo no va, me voy de la habitación y cierro hasta nuevo aviso"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 4,
+      "pregunta": "Si estuviéramos en una película de terror y el grupo tuviera que decidir quién se sacrifica para que el resto escape, ¿qué es lo que haría probablemente?",
+      "opciones": [
+        "Me ofrezco voluntario heroicamente porque soy la cabra (con discurso lacrimógeno incluido)",
+        "Me quedo en silencio absoluto esperando que otro levante la mano, un cacas",
+        "Propongo un sistema de sorteo \"justo\" (piedra, papel o tijera), porque piedra siempre gana",
+        "Te señalo a ti diciendo: \"Cariño, es que tú corres menos...\" (sucio traidor cochino)"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 5,
+      "pregunta": "Si tuviera un billete de solo ida en una máquina del tiempo, ¿a dónde iría?",
+      "opciones": [
+        "Al futuro, para vivir los avances tecnológicos y posibles viajes espaciales",
+        "Al pasado, para vivir una época histórica y conocer a Paco Rex en el Cretácico",
+        "Se queda en el presente, que \"más vale malo conocido...\""
+      ],
+      "correctaIndex": 1,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 6,
+      "pregunta": "Si mañana ganara 10 millones de euros en la lotería, ¿qué sería lo primero que haría?",
+      "opciones": [
+        "Dejar el trabajo en ese mismo instante para no volver a dar palo al agua",
+        "Comprar una casa increíble sin mirar el precio",
+        "No decir nada a nadie y llamar a un asesor financiero para invertir"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Cuál es mi condición indispensable para dormir bien? (Cuando duermo solo claro)",
+      "opciones": [
+        "Silencio absoluto y oscuridad total",
+        "La conchita entre las patas y el brazo por debajo de la almohada",
+        "Dormir sin calcetines y con una parte de la pierna sin tapar"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 8,
+      "pregunta": "Si solo pudiera comer una de estas dos cosas por el resto de su vida, ¿cuál elegiría?",
+      "opciones": [
+        "Gyozas",
+        "Sushis"
+      ],
+      "correctaIndex": 1,
+      "tiempoSegundos": 40
+    }
+  ]
+}

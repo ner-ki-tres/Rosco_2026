@@ -23,6 +23,7 @@ let roscoRecognition = null;
 let roscoIsRecording = false;
 let roscoLastViewportWidth = window.innerWidth;
 let roscoLastViewportHeight = window.innerHeight;
+let roscoInputFocusedOnTouch = false;
 
 function isTouchDevice() {
   return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(pointer: coarse)').matches;
@@ -30,6 +31,30 @@ function isTouchDevice() {
 
 function shouldAutoFocusRoscoInput() {
   return !isTouchDevice();
+}
+
+function trackRoscoInputFocus() {
+  const input = document.getElementById('roscoInput');
+  if (!input) return;
+
+  input.addEventListener('focus', () => {
+    if (isTouchDevice()) roscoInputFocusedOnTouch = true;
+  });
+
+  input.addEventListener('blur', () => {
+    if (isTouchDevice()) roscoInputFocusedOnTouch = false;
+  });
+}
+
+function closeRoscoVirtualKeyboard() {
+  const input = document.getElementById('roscoInput');
+  if (!input) return;
+
+  if (document.activeElement === input) {
+    input.blur();
+  }
+
+  roscoInputFocusedOnTouch = false;
 }
 
 function isRoscoTabletViewport() {
@@ -342,6 +367,8 @@ function renderRosco() {
       }, 100);
     }
 
+    trackRoscoInputFocus();
+
     return;
   }
 
@@ -431,6 +458,8 @@ function renderRosco() {
       if (input) input.focus();
     }, 100);
   }
+
+  trackRoscoInputFocus();
 }
 
 function getWheelRadius() {
@@ -447,6 +476,8 @@ function submitRoscoAnswer() {
   const input = document.getElementById('roscoInput');
   const answer = input.value.trim();
   if (!answer) return;
+
+  closeRoscoVirtualKeyboard();
 
   const current = roscoState.preguntas[roscoState.currentIndex];
   const isCorrect = normalizeStr(answer) === normalizeStr(current.respuesta);
@@ -480,6 +511,8 @@ function submitRoscoAnswer() {
 
 function pasapalabraAction() {
   if (roscoState.finished) return;
+
+  closeRoscoVirtualKeyboard();
 
   roscoState.estados[roscoState.currentIndex] = 'pasapalabra';
   showRoscoFeedback(false, 'Pasapalabra!');
@@ -532,6 +565,7 @@ function showRoscoFeedback(isCorrect, message) {
 
 function finishRosco() {
   stopRoscoGame();
+  closeRoscoVirtualKeyboard();
   roscoState.finished = true;
 
   const total = roscoState.preguntas.length;
@@ -592,6 +626,15 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
     if (currentGame === 'rosco' && !roscoState.finished) {
+      const input = document.getElementById('roscoInput');
+      const inputIsActive = input && document.activeElement === input;
+
+      if (isTouchDevice() && (roscoInputFocusedOnTouch || inputIsActive)) {
+        roscoLastViewportWidth = window.innerWidth;
+        roscoLastViewportHeight = window.innerHeight;
+        return;
+      }
+
       const widthDelta = Math.abs(window.innerWidth - roscoLastViewportWidth);
       const heightDelta = Math.abs(window.innerHeight - roscoLastViewportHeight);
       const keyboardLikeResize = isTouchDevice() && widthDelta < 120 && heightDelta > 60;

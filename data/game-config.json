@@ -129,8 +129,8 @@
   "rosco": {
     "titulo": "El Rosco Final",
     "descripcion": "Responde a las definiciones letra por letra",
-    "activeDataset": "Rosco_Sobre_Laura",
-    "tiempoSegundos": 270,
+    "activeDataset": "Rosco_Sobre_Nerik",
+    "tiempoSegundos": 260,
     "maxFallos": 27,
     "preguntas": [
       {
@@ -300,7 +300,7 @@
   "millon": {
     "titulo": "El precio del amor",
     "descripcion": "Reparte tus fajos entre respuestas y conserva la mayor cantidad posible",
-    "activeDataset": "default"
+    "activeDataset": "Preguntas_Nerik"
   },
   "background": {
     "autoRotate": false,

@@ -94,7 +94,7 @@
       "respuesta": "shape of you",
       "artista": "ed sheeran",
       "youtubeUrl": "https://youtu.be/erd3fTm-2t8",
-      "audioUrl": "/audio/canciones/I Choose you! - ＂Serena's Song＂  Amourshipping AMV (Remastered).mp3",
+      "audioUrl": "/audio/canciones/Ed Sheeran - Shape of You (Official Music Video).mp3",
       "pistasProgresivas": [
         {
           "numero": 1,
@@ -107,7 +107,7 @@
           "numero": 2,
           "tipo": "audio",
           "descripcion": "Escucha dos segundos de la cancion",
-          "audioUrl": "/audio/canciones/pista_2_I_Choose_you_-_Serenas_Song_Amourshipping_AMV_Remastered.mp3",
+          "audioUrl": "/audio/canciones/pista_2_Ed_Sheeran_-_Shape_of_You_Official_Music_Video.mp3",
           "puntuacion": 4
         },
         {
@@ -121,7 +121,7 @@
           "numero": 4,
           "tipo": "audio",
           "descripcion": "Escucha cinco segundos del estribillo",
-          "audioUrl": "/audio/canciones/pista_4_I_Choose_you_-_Serenas_Song_Amourshipping_AMV_Remastered.mp3",
+          "audioUrl": "/audio/canciones/pista_4_Ed_Sheeran_-_Shape_of_You_Official_Music_Video.mp3",
           "puntuacion": 2
         },
         {

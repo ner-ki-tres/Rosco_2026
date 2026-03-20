@@ -1,0 +1,95 @@
+{
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "¿Qué partícula subatómica es responsable de la masa de las demás partículas según el modelo estándar?",
+      "opciones": [
+        "Neutrino",
+        "Gluon",
+        "Bosón de Higgs",
+        "Fotón"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 2,
+      "pregunta": "¿Cuál de estos pintores es considerado el máximo exponente del estilo 'Fauvismo', caracterizado por el uso provocativo del color?",
+      "opciones": [
+        "Henri Matisse",
+        "Claude Monet",
+        "Gustav Klimt",
+        "Edvard Munch"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 3,
+      "pregunta": "En la tabla periódica, ¿cuál es el único metal que se encuentra en estado líquido a temperatura ambiente (25°C)?",
+      "opciones": [
+        "Francio",
+        "Galio",
+        "Mercurio",
+        "Cesio"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 4,
+      "pregunta": "¿En qué museo se encuentra el famoso cuadro 'El jardín de las delicias' del Bosco?",
+      "opciones": [
+        "Museo del Louvre",
+        "Rijksmuseum",
+        "Museo del Prado",
+        "National Gallery"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 5,
+      "pregunta": "¿Qué tipo de enlace químico se produce cuando dos átomos comparten electrones?",
+      "opciones": [
+        "Iónico",
+        "Metálico",
+        "Covalente"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Quién diseñó la cúpula de la Catedral de Santa María del Fiore en Florencia, resolviendo un problema de ingeniería de años?",
+      "opciones": [
+        "Filippo Brunelleschi",
+        "Michelangelo",
+        "Donatello"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Cómo se llama el proceso por el cual las estrellas, como nuestro Sol, producen energía?",
+      "opciones": [
+        "Fisión nuclear",
+        "Combustión química",
+        "Fusión nuclear"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 8,
+      "pregunta": "¿Qué artista es el autor de la icónica serie de cuadros de 'Las Latas de Sopa Campbell'?",
+      "opciones": [
+        "Andy Warhol",
+        "Roy Lichtenstein"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    }
+  ]
+}

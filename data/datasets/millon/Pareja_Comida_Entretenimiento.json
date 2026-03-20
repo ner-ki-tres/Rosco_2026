@@ -1,0 +1,95 @@
+{
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "¿Cuál de estos ingredientes NO lleva una ensaladilla rusa tradicional en España?",
+      "opciones": [
+        "Patata",
+        "Guisantes",
+        "Atún",
+        "Ketchup"
+      ],
+      "correctaIndex": 3,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 2,
+      "pregunta": "¿En qué ciudad española se encuentra el famoso monumento de 'La Puerta de Alcalá'?",
+      "opciones": [
+        "Madrid",
+        "Sevilla",
+        "Alcalá de Henares",
+        "Zaragoza"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 3,
+      "pregunta": "¿Cuál es el nombre de pila del actual Rey de España?",
+      "opciones": [
+        "Alfonso",
+        "Juan Carlos",
+        "Leonor",
+        "Felipe"
+      ],
+      "correctaIndex": 3,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 4,
+      "pregunta": "¿Qué sistema operativo para móviles tiene como logotipo un robot verde?",
+      "opciones": [
+        "Windows Phone",
+        "Android",
+        "Symbian",
+        "iOS"
+      ],
+      "correctaIndex": 1,
+      "tiempoSegundos": 30
+    },
+    {
+      "id": 5,
+      "pregunta": "¿A qué comunidad autónoma pertenecen las Islas Canarias?",
+      "opciones": [
+        "Grecia",
+        "Francia",
+        "Italia"
+      ],
+      "correctaIndex": 2,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Qué película ganó el primer premio Óscar a la 'Mejor Película de Animación' en la historia (año 2001)?",
+      "opciones": [
+        "Buscando a Nemo",
+        "Shrek",
+        "Toy Story"
+      ],
+      "correctaIndex": 1,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Qué pescado se utiliza tradicionalmente para elaborar el plato peruano llamado 'Ceviche'?",
+      "opciones": [
+        "Pescado blanco",
+        "Salmón",
+        "Atún"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 8,
+      "pregunta": "En la famosa serie 'Friends', ¿el personaje de Joey Tribbiani tiene una frase de ligue icónica que es '¿Cómo va eso?' (en su versión original: 'How you doin'?')?",
+      "opciones": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    }
+  ]
+}
