@@ -213,25 +213,33 @@ function submitCancionRespuesta(puntosDisponibles) {
   const input = document.getElementById('cancionRespuesta');
   const respuesta = input ? input.value : '';
   const correcta = normalizeStr(respuesta) === normalizeStr(cancion.respuesta || '');
-
-  cancionesState.answered[cancionesState.currentIndex] = correcta;
+  const totalPistas = Array.isArray(cancion.pistasProgresivas) ? cancion.pistasProgresivas.length : 0;
+  const hayMasPistas = cancionesState.pistaActual < totalPistas;
 
   if (correcta) {
+    cancionesState.answered[cancionesState.currentIndex] = true;
     cancionesState.scores[cancionesState.currentIndex] = puntosDisponibles;
     cancionesState.score += puntosDisponibles;
     const scoreEl = document.getElementById('cancionesScore');
     if (scoreEl) scoreEl.textContent = String(cancionesState.score);
     showCanelaAction('correct');
   } else {
-    cancionesState.scores[cancionesState.currentIndex] = 0;
     showCanelaAction('wrong');
+    if (!hayMasPistas) {
+      cancionesState.answered[cancionesState.currentIndex] = false;
+      cancionesState.scores[cancionesState.currentIndex] = 0;
+    }
   }
 
   const feedback = document.getElementById('cancionFeedback');
   if (feedback) {
     feedback.innerHTML = `
       <div class="cancion-resultado ${correcta ? 'correcto' : 'incorrecto'}">
-        ${correcta ? `Correcto! +${puntosDisponibles} puntos` : `Incorrecto. La respuesta era: <strong>${escapeHtml(cancion.respuesta || '')}</strong>`}
+        ${correcta
+          ? `Correcto! +${puntosDisponibles} puntos`
+          : (hayMasPistas
+              ? `Incorrecto. Pasamos a la pista ${cancionesState.pistaActual + 1}.`
+              : `Incorrecto. La respuesta era: <strong>${escapeHtml(cancion.respuesta || '')}</strong>`)}
       </div>
     `;
   }
@@ -239,8 +247,12 @@ function submitCancionRespuesta(puntosDisponibles) {
   if (input) input.disabled = true;
 
   setTimeout(() => {
-    cancionesState.currentIndex += 1;
-    cancionesState.pistaActual = 0;
+    if (correcta || !hayMasPistas) {
+      cancionesState.currentIndex += 1;
+      cancionesState.pistaActual = 0;
+    } else {
+      cancionesState.pistaActual += 1;
+    }
     renderCancionesQuestion();
   }, 1700);
 }
