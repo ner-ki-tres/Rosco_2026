@@ -1,0 +1,22 @@
+{
+  "name": "Palabras Clásicas",
+  "tiempoMemorizarSegundos": 30,
+  "tiempoResponderSegundos": 60,
+  "conjuntos": [
+    {
+      "id": 1,
+      "nombre": "Conjunto 1",
+      "palabras": ["ESTRELLA", "CASCADA", "MONTAÑA", "RELOJ", "GUITARRA", "NUBE", "ESPEJO", "CAMINO", "FUENTE"]
+    },
+    {
+      "id": 2,
+      "nombre": "Conjunto 2",
+      "palabras": ["BRÚJULA", "TESORO", "PUENTE", "JARDÍN", "CORONA", "VIENTO", "FARO", "ARENA", "LIBRO"]
+    },
+    {
+      "id": 3,
+      "nombre": "Conjunto 3",
+      "palabras": ["MARIPOSA", "CASTILLO", "PLUMA", "ANCLA", "DIAMANTE", "BOSQUE", "LUNA", "TORRE", "SEMILLA"]
+    }
+  ]
+}

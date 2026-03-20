@@ -1,0 +1,6 @@
+node_modules/
+data/canciones_temp/
+data/scores.json
+.env
+.DS_Store
+*.log

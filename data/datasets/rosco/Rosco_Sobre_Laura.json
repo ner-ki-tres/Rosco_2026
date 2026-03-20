@@ -1,0 +1,168 @@
+{
+  "tiempoSegundos": 180,
+  "maxFallos": 3,
+  "preguntas": [
+    {
+      "letra": "A",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "B",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "C",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "D",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "E",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "F",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "G",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "H",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "I",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "J",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "K",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "L",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "M",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "N",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "Ñ",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "O",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "P",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "Q",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "R",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "S",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "T",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "U",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "V",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "W",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "X",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "Y",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    },
+    {
+      "letra": "Z",
+      "tipo": "empieza",
+      "definicion": "",
+      "respuesta": ""
+    }
+  ]
+}

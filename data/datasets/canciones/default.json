@@ -1,0 +1,72 @@
+{
+  "name": "Pistas Clasicas",
+  "tiempoSegundos": 30,
+  "pistas": [
+    {
+      "id": 1,
+      "respuesta": "Ojos de Gata",
+      "artista": "Los Secretos",
+      "audioUrl": "",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Esta cancion de los 80 habla de ojos felinos.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "texto",
+          "descripcion": "La mirada de un animal domestico muy comun.",
+          "audioUrl": "",
+          "puntuacion": 4
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "respuesta": "Mediterraneo",
+      "artista": "Serrat",
+      "audioUrl": "",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Un clasico en espanol sobre el mar de Europa del sur.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "texto",
+          "descripcion": "Mar que separa Europa y Africa.",
+          "audioUrl": "",
+          "puntuacion": 4
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "respuesta": "Livin' La Vida Loca",
+      "artista": "Ricky Martin",
+      "audioUrl": "",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Exito internacional sobre vivir con intensidad.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "texto",
+          "descripcion": "Vivir la vida... pero en version loca.",
+          "audioUrl": "",
+          "puntuacion": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "tiempoSegundos": 30,
+  "pistas": [
+    {
+      "id": 1,
+      "respuesta": "la noia",
+      "artista": "angelina mango",
+      "youtubeUrl": "https://youtu.be/2EesiWrrU28",
+      "audioUrl": "/audio/canciones/Angelina Mango - La noia (Official Video - Sanremo 2024 - Eurovision 2024).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Canción que nos encantó y fue ganadora del 'Festival de la Canción de Sanremo 2024'.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos del fragmento inicial (tras los primeros 3 segundos)",
+          "audioUrl": "/audio/canciones/pista_2_Angelina_Mango_-_La_noia_TestoLyrics_Sanremo_2024.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "La artista hizo una colaboración con Álvaro de Luna y lo petaron también.",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos de la mejor parte de la cancion",
+          "audioUrl": "/audio/canciones/pista_4_Angelina_Mango_-_La_noia_TestoLyrics_Sanremo_2024.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "El nombre de la canción suena muy parecido a 'la novia'.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "respuesta": "como entrenar a tu dragon",
+      "artista": "John Powell",
+      "youtubeUrl": "https://youtu.be/Q4ksp-14-Og",
+      "audioUrl": "/audio/canciones/Test Driving Toothless (from How to Train Your Dragon).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Es una canción de una de mis sagas de películas favorita de dibujos animados.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos de la cancion",
+          "audioUrl": "/audio/canciones/pista_2_Test_Driving_Toothless_from_How_to_Train_Your_Dragon.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "Antes de llevar el aparato era un poco como el mejor amigo del protagonista.",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos del estribillo",
+          "audioUrl": "/audio/canciones/pista_4_Test_Driving_Toothless_from_How_to_Train_Your_Dragon.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "Fuimos a ver el Live Action de la primera película y me parezco mucho al prota, debería haber sido yo.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "respuesta": "shape of you",
+      "artista": "ed sheeran",
+      "youtubeUrl": "https://youtu.be/erd3fTm-2t8",
+      "audioUrl": "/audio/canciones/I Choose you! - ＂Serena's Song＂  Amourshipping AMV (Remastered).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "La canté de peque en un concierto que hice con mi academia de canto.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos de la cancion",
+          "audioUrl": "/audio/canciones/pista_2_I_Choose_you_-_Serenas_Song_Amourshipping_AMV_Remastered.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "El artista nos cuenta que 'el club no es el mejor lugar para encontrar el amor', yo digo que es la universidad fíjate.",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos del estribillo",
+          "audioUrl": "/audio/canciones/pista_4_I_Choose_you_-_Serenas_Song_Amourshipping_AMV_Remastered.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "Para mi españolita preciosísima jeje, el título de la canción en español sería algo así como 'La forma de ti'.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    }
+  ]
+}

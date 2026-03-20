@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Contenido - Pasapalabra AC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ac-green: #7ecb7e;
+      --ac-green-dark: #5da85d;
+      --ac-green-light: #b8e6b8;
+      --ac-blue: #87ceeb;
+      --ac-blue-dark: #5ba3c9;
+      --ac-yellow: #f5d76e;
+      --ac-yellow-dark: #d4b84a;
+      --ac-orange: #f0a050;
+      --ac-brown: #8b6f47;
+      --ac-brown-light: #c4a26e;
+      --ac-cream: #fef9e7;
+      --ac-white: #fffef5;
+      --ac-red: #e74c3c;
+      --ac-sand: #f5e6c8;
+      --ac-text: #5a4a3a;
+      --ac-text-light: #8a7a6a;
+      --ac-shadow: rgba(90, 74, 58, 0.2);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #b8e6f7 0%, #d4f0d4 100%);
+      min-height: 100vh;
+      color: var(--ac-text);
+      padding: 20px;
+    }
+    .editor-header { text-align: center; margin-bottom: 30px; }
+    .editor-header h1 { font-size: 2.5rem; font-weight: 900; color: var(--ac-white); text-shadow: 3px 3px 0 var(--ac-brown); }
+    .editor-header p { color: var(--ac-text); font-weight: 600; margin-top: 5px; }
+    .editor-nav { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+    .nav-btn {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
+      padding: 12px 25px; border: 3px solid var(--ac-brown-light); border-radius: 15px;
+      background: var(--ac-cream); color: var(--ac-text); cursor: pointer;
+      transition: all 0.2s ease; box-shadow: 0 4px 0 var(--ac-brown-light);
+    }
+    .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ac-brown-light); }
+    .nav-btn.active { background: var(--ac-yellow); border-color: var(--ac-yellow-dark); box-shadow: 0 4px 0 var(--ac-yellow-dark); }
+    .back-link {
+      display: inline-block; margin-bottom: 20px; color: var(--ac-text); text-decoration: none;
+      font-weight: 700; background: var(--ac-cream); padding: 8px 20px; border-radius: 12px;
+      box-shadow: 0 3px 0 var(--ac-brown-light); transition: all 0.2s;
+    }
+    .back-link:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--ac-brown-light); }
+    .editor-section { display: none; max-width: 900px; margin: 0 auto; }
+    .editor-section.active { display: block; }
+    .card {
+      background: rgba(255, 255, 245, 0.95); border-radius: 20px; padding: 25px;
+      margin-bottom: 20px; box-shadow: 0 6px 20px var(--ac-shadow);
+    }
+    .card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; color: var(--ac-text); display: flex; align-items: center; gap: 8px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: 700; margin-bottom: 5px; color: var(--ac-text); font-size: 0.95rem; }
+    .form-group input, .form-group textarea, .form-group select {
+      font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 1rem;
+      width: 100%; padding: 10px 15px; border: 3px solid var(--ac-brown-light);
+      border-radius: 12px; background: var(--ac-white); color: var(--ac-text); outline: none; transition: border-color 0.3s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--ac-blue-dark); }
+    .form-group textarea { resize: vertical; min-height: 60px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-row-3 { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 15px; align-items: end; }
+    .item-card {
+      background: var(--ac-sand); border-radius: 15px; padding: 20px; margin-bottom: 15px;
+      border: 2px solid var(--ac-brown-light); position: relative;
+    }
+    .item-card .item-number {
+      position: absolute; top: -10px; left: 15px; background: var(--ac-yellow); color: var(--ac-brown);
+      padding: 2px 12px; border-radius: 10px; font-weight: 900; font-size: 0.85rem; border: 2px solid var(--ac-yellow-dark);
+    }
+    .backgrounds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 10px; }
+    .bg-thumb {
+      border-radius: 12px; overflow: hidden; border: 3px solid transparent; cursor: pointer;
+      box-shadow: 0 6px 18px var(--ac-shadow); position: relative;
+    }
+    .bg-thumb img { width: 100%; height: 80px; object-fit: cover; display: block; }
+    .bg-thumb.selected { border-color: var(--ac-blue-dark); }
+    .bg-thumb .label {
+      position: absolute; left: 6px; bottom: 6px; background: rgba(255,255,255,0.85);
+      padding: 4px 8px; border-radius: 8px; font-weight: 800; font-size: 0.8rem; color: var(--ac-text);
+    }
+    .btn {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 10px 22px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; color: white;
+    }
+    .btn-primary { background: var(--ac-green); box-shadow: 0 4px 0 var(--ac-green-dark); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ac-green-dark); }
+    .btn-danger { background: var(--ac-red); box-shadow: 0 4px 0 #c0392b; }
+    .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c0392b; }
+    .btn-secondary { background: var(--ac-orange); box-shadow: 0 4px 0 #c07030; }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c07030; }
+    .btn-save-main {
+      font-size: 1.2rem; padding: 15px 40px; background: var(--ac-green);
+      box-shadow: 0 6px 0 var(--ac-green-dark); display: block; margin: 30px auto;
+    }
+    .btn-row { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+    .options-list { display: flex; flex-direction: column; gap: 8px; }
+    .option-row { display: flex; gap: 8px; align-items: center; }
+    .option-row input { flex: 1; }
+    .option-row .btn { padding: 8px 12px; font-size: 0.85rem; }
+    .toast {
+      position: fixed; top: 20px; right: 20px; background: var(--ac-cream);
+      border: 3px solid var(--ac-green); border-radius: 15px; padding: 15px 25px;
+      font-weight: 700; z-index: 1000; box-shadow: 0 6px 20px var(--ac-shadow);
+      transform: translateX(120%); transition: transform 0.4s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.error { border-color: var(--ac-red); }
+    .help-text { font-size: 0.85rem; color: var(--ac-text-light); font-weight: 600; margin-top: 3px; }
+    .limit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--ac-text);
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid var(--ac-brown-light);
+      border-radius: 999px;
+      padding: 5px 12px;
+      margin-bottom: 12px;
+    }
+    .limit-badge.limit-full {
+      border-color: var(--ac-red);
+      color: var(--ac-red);
+      background: rgba(231, 76, 60, 0.12);
+    }
+    .hints-templates {
+      min-height: 110px !important;
+      font-size: 0.9rem !important;
+      line-height: 1.35;
+    }
+    .words-grid-editor { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .word-input-wrap { position: relative; }
+    .word-input-wrap .word-num {
+      position: absolute; top: -8px; left: 10px; background: var(--ac-orange); color: white;
+      padding: 1px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 900;
+    }
+    /* Dataset selector bar */
+    .dataset-bar {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      margin-bottom: 20px; padding: 14px 18px;
+      background: rgba(255, 255, 245, 0.95); border-radius: 16px;
+      box-shadow: 0 4px 12px var(--ac-shadow);
+    }
+    .dataset-bar label { font-weight: 800; font-size: 0.95rem; color: var(--ac-text); white-space: nowrap; }
+    .dataset-bar select {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 8px 14px; border: 2px solid var(--ac-brown-light); border-radius: 10px;
+      background: var(--ac-white); color: var(--ac-text); flex: 1; min-width: 120px;
+    }
+    .dataset-bar .btn { font-size: 0.85rem; padding: 8px 16px; }
+    @media (max-width: 768px) {
+      .editor-header h1 { font-size: 2rem; }
+      .editor-section { padding: 0; }
+      .card { padding: 18px; margin-bottom: 16px; }
+      .card h3 { font-size: 1.15rem; }
+      .form-row { grid-template-columns: 1fr; gap: 12px; }
+      .form-row-3 { grid-template-columns: 1fr; gap: 12px; }
+      .words-grid-editor { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .form-group input, .form-group textarea { padding: 8px 12px; font-size: 0.95rem; }
+      .form-group textarea { min-height: 50px; }
+      .btn { padding: 8px 16px; font-size: 0.9rem; }
+      .btn-save-main { font-size: 1rem; padding: 12px 30px; margin: 20px auto; }
+      .backgrounds-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+      .bg-thumb img { height: 70px; }
+      .item-card { padding: 15px; margin-bottom: 12px; }
+      .dataset-bar { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; }
+      .dataset-bar select, .dataset-bar .btn { width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-row-3 { grid-template-columns: 1fr; }
+      .words-grid-editor { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back-link" onclick="event.preventDefault(); window.location.href='/';">Volver al Juego</a>
+
+  <div class="editor-header">
+    <h1>Editor de Contenido</h1>
+    <p>Personaliza las pruebas de Pasapalabra a tu gusto</p>
+  </div>
+
+  <div class="editor-nav">
+    <button class="nav-btn active" onclick="showEditorSection('canciones', this)">Canciones</button>
+    <button class="nav-btn" onclick="showEditorSection('palabras', this)">Palabras</button>
+    <button class="nav-btn" onclick="showEditorSection('rosco', this)">Rosco</button>
+    <button class="nav-btn" onclick="showEditorSection('fondos', this)">Fondos</button>
+  </div>
+
+  <!-- EDITOR DE CANCIONES -->
+  <div class="editor-section active" id="section-canciones">
+    <div class="dataset-bar">
+      <label>Dataset:</label>
+      <select id="datasetSelect-canciones" onchange="loadSelectedDataset('canciones')"></select>
+      <button class="btn btn-secondary" onclick="createNewDataset('canciones')">Nuevo</button>
+      <button class="btn btn-danger" onclick="deleteCurrentDataset('canciones')">Eliminar</button>
+    </div>
+    
+    <!-- Descarga desde YouTube -->
+    <div class="card">
+      <h3>🎵 Descargar Canción desde YouTube</h3>
+      <p class="help-text" style="margin-bottom: 15px;">Las pistas (audio y texto) se generarán automáticamente. La puntuación irá de 5 a 1 según la pista utilizada.</p>
+      <div class="form-group">
+        <label>Enlace de YouTube</label>
+        <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=..." value="">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Título de la Canción</label>
+          <input type="text" id="cancionTitulo" placeholder="ej: Bohemian Rhapsody">
+        </div>
+        <div class="form-group">
+          <label>Artista</label>
+          <input type="text" id="cancionArtista" placeholder="ej: Queen">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Plantillas para pista textual automática</label>
+        <textarea id="textHintTemplates" class="hints-templates" placeholder="Una plantilla por línea. Usa {titulo} y {artista}.">No es una fruta tropical: es "{titulo}".
+Si le dieras la vuelta al título... seguiría siendo "{titulo}".
+La canción es de {artista} y el título rima con misterio.
+El nombre real no es secreto, pero suena a acertijo: "{titulo}".</textarea>
+        <p class="help-text">Puedes personalizar estas frases. Se elegirá una de forma automática en cada canción.</p>
+      </div>
+      <div id="uploadProgress" style="display: none; margin-top: 15px;">
+        <div style="background: #e0e0e0; border-radius: 10px; height: 24px; overflow: hidden;">
+          <div id="progressBar" style="background: var(--ac-green); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.8rem;"></div>
+        </div>
+        <p id="progressText" style="margin-top: 8px; text-align: center; font-size: 0.9rem; color: var(--ac-text-light);">Descargando y procesando...</p>
+      </div>
+      <button class="btn btn-primary" id="btnDescargar" style="width: 100%; margin-top: 10px; font-size: 1rem; padding: 12px;" onclick="descargarYProcesarCancion()">Descargar y Procesar</button>
+    </div>
+
+    <div class="card">
+      <h3>Configuracion General</h3>
+      <div class="form-group">
+        <label>Tiempo por pista (segundos)</label>
+        <input type="number" id="cancionesTiempo" min="5" max="120" value="30">
+      </div>
+    </div>
+    <div id="cancionesList"></div>
+    <button class="btn btn-primary btn-save-main" onclick="saveCurrentDataset('canciones')">Guardar Dataset</button>
+  </div>
+
+  <!-- EDITOR DE PALABRAS -->
+  <div class="editor-section" id="section-palabras">
+    <div class="dataset-bar">
+      <label>Dataset:</label>
+      <select id="datasetSelect-palabras" onchange="loadSelectedDataset('palabras')"></select>
+      <button class="btn btn-secondary" onclick="createNewDataset('palabras')">Nuevo</button>
+      <button class="btn btn-danger" onclick="deleteCurrentDataset('palabras')">Eliminar</button>
+    </div>
+    <div class="card">
+      <h3>Configuracion General</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tiempo para memorizar (segundos)</label>
+          <input type="number" id="palabrasTiempoMem" min="5" max="120" value="30">
+        </div>
+        <div class="form-group">
+          <label>Tiempo para responder (segundos)</label>
+          <input type="number" id="palabrasTiempoRes" min="10" max="180" value="60">
+        </div>
+      </div>
+    </div>
+    <div id="palabrasList"></div>
+    <div class="btn-row" style="justify-content: center; margin-top: 15px;">
+      <button class="btn btn-secondary" onclick="addConjunto()">Anadir Conjunto</button>
+    </div>
+    <button class="btn btn-primary btn-save-main" onclick="saveCurrentDataset('palabras')">Guardar Dataset</button>
+  </div>
+
+  <!-- EDITOR DEL ROSCO -->
+  <div class="editor-section" id="section-rosco">
+    <div class="dataset-bar">
+      <label>Dataset:</label>
+      <select id="datasetSelect-rosco" onchange="loadSelectedDataset('rosco')"></select>
+      <button class="btn btn-secondary" onclick="createNewDataset('rosco')">Nuevo</button>
+      <button class="btn btn-danger" onclick="deleteCurrentDataset('rosco')">Eliminar</button>
+    </div>
+    <div class="card">
+      <h3>Configuracion General</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tiempo total (segundos)</label>
+          <input type="number" id="roscoTiempo" min="30" max="600" value="180">
+        </div>
+        <div class="form-group">
+          <label>Maximo de fallos permitidos</label>
+          <input type="number" id="roscoMaxFallos" min="1" max="27" value="3">
+        </div>
+      </div>
+    </div>
+    <div id="roscoList"></div>
+    <button class="btn btn-primary btn-save-main" onclick="saveCurrentDataset('rosco')">Guardar Dataset</button>
+  </div>
+
+  <!-- EDITOR DE FONDOS -->
+  <div class="editor-section" id="section-fondos">
+    <div class="card">
+      <h3>Fondos del Juego</h3>
+      <div class="form-group">
+        <label>Rotacion automatica</label>
+        <select id="backgroundAutoRotate">
+          <option value="true">Activada</option>
+          <option value="false">Desactivada</option>
+        </select>
+        <p class="help-text">Si esta activada, el fondo cambiara al entrar en la pantalla principal.</p>
+      </div>
+      <div class="form-group">
+        <label>Fondo seleccionado (si no esta en automatica)</label>
+        <div id="backgroundsGrid" class="backgrounds-grid"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Fondo de Video</h3>
+      <div class="form-group">
+        <label>Video wallpaper activo</label>
+        <div id="videoWallpaperGrid" class="backgrounds-grid"></div>
+        <p class="help-text">Haz clic en una miniatura para seleccionar el fondo animado. Haz clic en el seleccionado para quitarlo.</p>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-save-main" onclick="saveBackgroundConfig()">Guardar Fondos</button>
+  </div>
+
+  <script src="js/env.js"></script>
+  <script>
+    let config = null;
+    let currentDatasets = { canciones: null, palabras: null, rosco: null };
+    let currentDatasetId = { canciones: 'default', palabras: 'default', rosco: 'default' };
+    const MAX_CANCIONES_POR_DATASET = 3;
+
+    function getCustomTextHintTemplates() {
+      const input = document.getElementById('textHintTemplates');
+      if (!input) return [];
+      return input.value
+        .split('\n')
+        .map(line => line.trim())
+        .filter(Boolean)
+        .slice(0, 20);
+    }
+
+    // ==========================================
+    // INIT
+    // ==========================================
+
+    async function init() {
+      try {
+        const res = await fetch('/api/config');
+        config = await res.json();
+      } catch (err) {
+        showToast('Error cargando configuracion', true);
+        return;
+      }
+
+      // Load dataset lists for all game types
+      await Promise.all(['canciones', 'palabras', 'rosco'].map(gt => loadDatasetList(gt)));
+
+      // Populate fondos
+      populateFondos();
+
+      // Check query param for initial section
+      const params = new URLSearchParams(window.location.search);
+      const game = params.get('game');
+      if (game && ['canciones', 'palabras', 'rosco', 'fondos'].includes(game)) {
+        const btns = document.querySelectorAll('.nav-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.editor-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + game).classList.add('active');
+        btns.forEach(b => { if (b.textContent.toLowerCase().includes(game)) b.classList.add('active'); });
+      }
+    }
+
+    function showEditorSection(section, btn) {
+      document.querySelectorAll('.editor-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('section-' + section).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    // ==========================================
+    // DATASET MANAGEMENT
+    // ==========================================
+
+    async function loadDatasetList(gameType) {
+      try {
+        const res = await fetch('/api/datasets/' + gameType);
+        const datasets = await res.json();
+        const select = document.getElementById('datasetSelect-' + gameType);
+        select.innerHTML = '';
+        datasets.forEach(ds => {
+          const opt = document.createElement('option');
+          opt.value = ds.id || ds;
+          opt.textContent = ds.name || ds.id || ds;
+          select.appendChild(opt);
+        });
+        // Set active dataset from config
+        const activeDs = config?.[gameType]?.activeDataset || 'default';
+        const ids = datasets.map(ds => ds.id || ds);
+        if (ids.includes(activeDs)) {
+          select.value = activeDs;
+          currentDatasetId[gameType] = activeDs;
+        } else if (ids.length > 0) {
+          currentDatasetId[gameType] = ids[0];
+        }
+        // Load it
+        await loadSelectedDataset(gameType);
+      } catch (err) {
+        console.error('Error loading datasets for', gameType, err);
+      }
+    }
+
+    async function loadSelectedDataset(gameType) {
+      const select = document.getElementById('datasetSelect-' + gameType);
+      const dsId = select.value;
+      currentDatasetId[gameType] = dsId;
+
+      try {
+        const res = await fetch('/api/datasets/' + gameType + '/' + encodeURIComponent(dsId));
+        const data = await res.json();
+        currentDatasets[gameType] = data;
+        populateGameEditor(gameType, data);
+      } catch (err) {
+        showToast('Error cargando dataset ' + dsId, true);
+      }
+    }
+
+    async function createNewDataset(gameType) {
+      const name = prompt('Nombre del nuevo dataset:');
+      if (!name || !name.trim()) return;
+      const dsId = name.trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+
+      // Create with minimal default data
+      let defaultData;
+      if (gameType === 'canciones') {
+        defaultData = { tiempoSegundos: 30, pistas: [] };
+      } else if (gameType === 'palabras') {
+        defaultData = { tiempoMemorizarSegundos: 30, tiempoResponderSegundos: 60, conjuntos: [{ id: 1, nombre: 'Conjunto 1', palabras: ['PALABRA1','PALABRA2','PALABRA3','PALABRA4','PALABRA5','PALABRA6','PALABRA7','PALABRA8','PALABRA9'] }] };
+      } else {
+        defaultData = { tiempoSegundos: 180, maxFallos: 3, preguntas: [{ letra: 'A', tipo: 'empieza', definicion: 'Definicion...', respuesta: 'RESPUESTA' }] };
+      }
+
+      try {
+        await fetch('/api/datasets/' + gameType + '/' + encodeURIComponent(dsId), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(defaultData)
+        });
+        showToast('Dataset "' + dsId + '" creado');
+        await loadDatasetList(gameType);
+        document.getElementById('datasetSelect-' + gameType).value = dsId;
+        await loadSelectedDataset(gameType);
+      } catch (err) {
+        showToast('Error creando dataset', true);
+      }
+    }
+
+    async function deleteCurrentDataset(gameType) {
+      const dsId = currentDatasetId[gameType];
+      if (dsId === 'default') {
+        showToast('No se puede eliminar el dataset por defecto', true);
+        return;
+      }
+      if (!confirm('Eliminar dataset "' + dsId + '"?')) return;
+
+      try {
+        await fetch('/api/datasets/' + gameType + '/' + encodeURIComponent(dsId), { method: 'DELETE' });
+        showToast('Dataset eliminado');
+        await loadDatasetList(gameType);
+      } catch (err) {
+        showToast('Error eliminando dataset', true);
+      }
+    }
+
+    async function saveCurrentDataset(gameType) {
+      const dsId = currentDatasetId[gameType];
+      let data;
+
+      if (gameType === 'canciones') {
+        collectCancionesData();
+        if ((currentDatasets.canciones.pistas || []).length > MAX_CANCIONES_POR_DATASET) {
+          showToast('Solo se permiten 3 canciones por dataset. Elimina las sobrantes antes de guardar.', true);
+          return;
+        }
+        data = {
+          tiempoSegundos: currentDatasets.canciones.tiempoSegundos,
+          pistas: (currentDatasets.canciones.pistas || []).map((p, i) => ({
+            id: p.id || (i + 1),
+            respuesta: p.respuesta || '',
+            artista: p.artista || '',
+            youtubeUrl: p.youtubeUrl || '',
+            audioUrl: p.audioUrl || '',
+            pistasProgresivas: Array.isArray(p.pistasProgresivas)
+              ? p.pistasProgresivas.map((pp, j) => ({
+                  numero: pp.numero || (j + 1),
+                  tipo: pp.tipo || (pp.audioUrl ? 'audio' : 'texto'),
+                  descripcion: pp.descripcion || '',
+                  audioUrl: pp.audioUrl || '',
+                  puntuacion: typeof pp.puntuacion === 'number' ? pp.puntuacion : Math.max(1, 5 - j)
+                }))
+              : []
+          }))
+        };
+      } else if (gameType === 'palabras') {
+        collectPalabrasData();
+        data = { tiempoMemorizarSegundos: currentDatasets.palabras.tiempoMemorizarSegundos, tiempoResponderSegundos: currentDatasets.palabras.tiempoResponderSegundos, conjuntos: currentDatasets.palabras.conjuntos };
+      } else {
+        collectRoscoData();
+        data = { tiempoSegundos: currentDatasets.rosco.tiempoSegundos, maxFallos: currentDatasets.rosco.maxFallos, preguntas: currentDatasets.rosco.preguntas };
+      }
+
+      try {
+        await fetch('/api/datasets/' + gameType + '/' + encodeURIComponent(dsId), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        // Also update activeDataset in config
+        if (!config[gameType]) config[gameType] = {};
+        config[gameType].activeDataset = dsId;
+        // Merge timing config
+        if (gameType === 'canciones') config.canciones.tiempoSegundos = data.tiempoSegundos;
+        if (gameType === 'palabras') { config.palabras.tiempoMemorizarSegundos = data.tiempoMemorizarSegundos; config.palabras.tiempoResponderSegundos = data.tiempoResponderSegundos; }
+        if (gameType === 'rosco') { config.rosco.tiempoSegundos = data.tiempoSegundos; config.rosco.maxFallos = data.maxFallos; }
+
+        await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(config) });
+
+        showToast('Dataset "' + dsId + '" guardado correctamente');
+      } catch (err) {
+        showToast('Error guardando dataset', true);
+      }
+    }
+
+    // ==========================================
+    // POPULATE EDITORS
+    // ==========================================
+
+    function populateGameEditor(gameType, data) {
+      if (gameType === 'canciones') {
+        currentDatasets.canciones = normalizeCancionesDataset(data);
+        document.getElementById('cancionesTiempo').value = currentDatasets.canciones.tiempoSegundos || 30;
+        renderCancionesList();
+      } else if (gameType === 'palabras') {
+        currentDatasets.palabras = data;
+        document.getElementById('palabrasTiempoMem').value = data.tiempoMemorizarSegundos || 30;
+        document.getElementById('palabrasTiempoRes').value = data.tiempoResponderSegundos || 60;
+        renderPalabrasList();
+      } else if (gameType === 'rosco') {
+        currentDatasets.rosco = data;
+        document.getElementById('roscoTiempo').value = data.tiempoSegundos || 180;
+        document.getElementById('roscoMaxFallos').value = data.maxFallos || 3;
+        renderRoscoList();
+      }
+    }
+
+    // ==========================================
+    // CANCIONES EDITOR
+    // ==========================================
+
+    function normalizeCancionesDataset(data) {
+      const pistas = Array.isArray(data?.pistas) ? data.pistas : [];
+
+      return {
+        tiempoSegundos: data?.tiempoSegundos || 30,
+        pistas: pistas.map((p, i) => {
+          if (Array.isArray(p.pistasProgresivas) && p.pistasProgresivas.length > 0) {
+            return p;
+          }
+
+          const pistasProgresivas = [];
+          if (p.audioUrl) {
+            pistasProgresivas.push({
+              numero: 1,
+              tipo: 'audio',
+              descripcion: 'Escucha esta pista',
+              audioUrl: p.audioUrl,
+              puntuacion: 5
+            });
+          }
+
+          pistasProgresivas.push({
+            numero: pistasProgresivas.length + 1,
+            tipo: 'texto',
+            descripcion: p.pista || 'Adivina la canción',
+            audioUrl: '',
+            puntuacion: pistasProgresivas.length === 0 ? 5 : 4
+          });
+
+          return {
+            id: p.id || (i + 1),
+            respuesta: p.respuesta || '',
+            artista: p.artista || '',
+            youtubeUrl: p.youtubeUrl || '',
+            audioUrl: p.audioUrl || '',
+            pistasProgresivas
+          };
+        })
+      };
+    }
+
+    function renderCancionesList() {
+      const ds = currentDatasets.canciones;
+      if (!ds || !Array.isArray(ds.pistas)) return;
+
+      const container = document.getElementById('cancionesList');
+      const totalCanciones = ds.pistas.length;
+      const limitClass = totalCanciones >= MAX_CANCIONES_POR_DATASET ? 'limit-badge limit-full' : 'limit-badge';
+      const headerHtml = `<div class="${limitClass}">Canciones en dataset: ${totalCanciones} / ${MAX_CANCIONES_POR_DATASET}</div>`;
+
+      if (ds.pistas.length === 0) {
+        container.innerHTML = headerHtml + '<div class="card"><p class="help-text">Todavía no hay canciones. Usa el formulario superior para añadir una.</p></div>';
+        return;
+      }
+
+      container.innerHTML = headerHtml + ds.pistas.map((pista, i) => {
+        const pistasProgresivas = Array.isArray(pista.pistasProgresivas) ? pista.pistasProgresivas : [];
+        const pistasHtml = pistasProgresivas.map((pp, j) => {
+          if (pp.tipo === 'audio') {
+            return `
+              <div class="form-group">
+                <label>Pista ${j + 1} (audio, no editable)</label>
+                <input type="text" value="${pp.audioUrl || ''}" readonly style="background: #f0f0f0;">
+              </div>
+            `;
+          }
+          return `
+            <div class="form-group">
+              <label>Pista ${j + 1} (texto editable)</label>
+              <textarea id="cancion-pista-texto-${i}-${j}" rows="2">${pp.descripcion || ''}</textarea>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="item-card" style="background: linear-gradient(135deg, var(--ac-sand) 0%, #fff9e6 100%); border: 2px solid var(--ac-yellow-dark);">
+            <span class="item-number">🎵 Canción ${i + 1}</span>
+            <div class="form-row" style="margin-top: 10px;">
+              <div class="form-group">
+                <label>Título (respuesta correcta)</label>
+                <input type="text" id="cancion-resp-${i}" value="${pista.respuesta || ''}">
+              </div>
+              <div class="form-group">
+                <label>Artista</label>
+                <input type="text" id="cancion-artista-${i}" value="${pista.artista || ''}">
+              </div>
+            </div>
+            ${pistasHtml}
+            <div class="btn-row">
+              <button class="btn btn-danger" onclick="removeCancion(${i})">Eliminar canción</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function removeCancion(index) {
+      collectCancionesData();
+      currentDatasets.canciones.pistas.splice(index, 1);
+      renderCancionesList();
+    }
+
+    function collectCancionesData() {
+      const ds = currentDatasets.canciones;
+      if (!ds) return;
+      ds.tiempoSegundos = parseInt(document.getElementById('cancionesTiempo').value) || 30;
+      ds.pistas.forEach((pista, i) => {
+        pista.respuesta = document.getElementById('cancion-resp-' + i)?.value || pista.respuesta;
+        pista.artista = document.getElementById('cancion-artista-' + i)?.value || pista.artista;
+
+        if (Array.isArray(pista.pistasProgresivas)) {
+          pista.pistasProgresivas.forEach((pp, j) => {
+            if (pp.tipo === 'texto') {
+              const textarea = document.getElementById('cancion-pista-texto-' + i + '-' + j);
+              if (textarea) pp.descripcion = textarea.value;
+            }
+          });
+        }
+      });
+    }
+
+    async function descargarYProcesarCancion() {
+      const url = document.getElementById('youtubeUrl').value.trim();
+      const titulo = document.getElementById('cancionTitulo').value.trim();
+      const artista = document.getElementById('cancionArtista').value.trim();
+      const textHintTemplates = getCustomTextHintTemplates();
+
+      if (!currentDatasets.canciones) currentDatasets.canciones = { tiempoSegundos: 30, pistas: [] };
+      if (!Array.isArray(currentDatasets.canciones.pistas)) currentDatasets.canciones.pistas = [];
+
+      if (currentDatasets.canciones.pistas.length >= MAX_CANCIONES_POR_DATASET) {
+        showToast('Este dataset ya tiene 3 canciones. Elimina una antes de añadir otra.', true);
+        return;
+      }
+
+      if (!url || !titulo || !artista) {
+        showToast('Por favor completa todos los campos', true);
+        return;
+      }
+
+      // Validar que sea URL de YouTube
+      if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+        showToast('Por favor proporciona un enlace válido de YouTube', true);
+        return;
+      }
+
+      const btn = document.getElementById('btnDescargar');
+      const progressDiv = document.getElementById('uploadProgress');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+
+      btn.disabled = true;
+      progressDiv.style.display = 'block';
+      progressBar.style.width = '10%';
+      progressText.textContent = 'Descargando de YouTube...';
+
+      try {
+        const response = await fetch('/api/songs/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            youtubeUrl: url,
+            titulo: titulo,
+            artista: artista,
+            textHintTemplates
+          })
+        });
+
+        progressBar.style.width = '50%';
+        progressText.textContent = 'Generando pistas...';
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Error procesando canción');
+        }
+
+        const resultado = await response.json();
+
+        if (resultado.exito && resultado.cancion) {
+          progressBar.style.width = '90%';
+          progressText.textContent = 'Formateando datos...';
+
+          collectCancionesData();
+          const cancion = resultado.cancion;
+          if (!Array.isArray(currentDatasets.canciones.pistas)) currentDatasets.canciones.pistas = [];
+
+          if (currentDatasets.canciones.pistas.length >= MAX_CANCIONES_POR_DATASET) {
+            throw new Error('Este dataset ya alcanzó el máximo de 3 canciones');
+          }
+
+          const nuevaPista = {
+            id: (currentDatasets.canciones.pistas.length + 1),
+            respuesta: cancion.titulo,
+            artista: cancion.artista,
+            youtubeUrl: url,
+            audioUrl: cancion.audioUrl,
+            pistasProgresivas: cancion.pistas
+          };
+
+          currentDatasets.canciones.pistas.push(nuevaPista);
+          
+          progressBar.style.width = '100%';
+          progressText.textContent = 'Canción procesada correctamente';
+
+          renderCancionesList();
+          
+          // Limpiar campos
+          document.getElementById('youtubeUrl').value = '';
+          document.getElementById('cancionTitulo').value = '';
+          document.getElementById('cancionArtista').value = '';
+
+          showToast('Canción "' + cancion.titulo + '" procesada correctamente');
+
+          setTimeout(() => {
+            progressDiv.style.display = 'none';
+          }, 2000);
+        } else {
+          throw new Error('Respuesta inválida del servidor');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('Error: ' + error.message, true);
+        progressDiv.style.display = 'none';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // ==========================================
+    // PALABRAS EDITOR
+    // ==========================================
+
+    function renderPalabrasList() {
+      const ds = currentDatasets.palabras;
+      if (!ds || !ds.conjuntos) return;
+      const container = document.getElementById('palabrasList');
+      container.innerHTML = ds.conjuntos.map((set, i) => `
+        <div class="item-card">
+          <span class="item-number">${set.nombre || 'Conjunto ' + (i + 1)}</span>
+          <div class="form-group" style="margin-top: 10px;">
+            <label>Nombre del conjunto</label>
+            <input type="text" id="palabras-nombre-${i}" value="${set.nombre || ''}">
+          </div>
+          <div class="form-group">
+            <label>9 Palabras (en orden)</label>
+            <div class="words-grid-editor">
+              ${set.palabras.map((word, j) => `
+                <div class="word-input-wrap">
+                  <span class="word-num">${j + 1}</span>
+                  <input type="text" id="palabra-${i}-${j}" value="${word}" style="padding-top: 12px;">
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-danger" onclick="removeConjunto(${i})">Eliminar Conjunto</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addConjunto() {
+      collectPalabrasData();
+      currentDatasets.palabras.conjuntos.push({
+        id: currentDatasets.palabras.conjuntos.length + 1, nombre: 'Nuevo Conjunto',
+        palabras: ['PALABRA1','PALABRA2','PALABRA3','PALABRA4','PALABRA5','PALABRA6','PALABRA7','PALABRA8','PALABRA9']
+      });
+      renderPalabrasList();
+    }
+
+    function removeConjunto(index) {
+      collectPalabrasData();
+      currentDatasets.palabras.conjuntos.splice(index, 1);
+      renderPalabrasList();
+    }
+
+    function collectPalabrasData() {
+      const ds = currentDatasets.palabras;
+      if (!ds) return;
+      ds.tiempoMemorizarSegundos = parseInt(document.getElementById('palabrasTiempoMem').value) || 30;
+      ds.tiempoResponderSegundos = parseInt(document.getElementById('palabrasTiempoRes').value) || 60;
+      ds.conjuntos.forEach((set, i) => {
+        const nameEl = document.getElementById('palabras-nombre-' + i);
+        if (nameEl) {
+          set.nombre = nameEl.value;
+          for (let j = 0; j < 9; j++) {
+            const wordEl = document.getElementById('palabra-' + i + '-' + j);
+            if (wordEl) set.palabras[j] = wordEl.value;
+          }
+        }
+      });
+    }
+
+    // ==========================================
+    // ROSCO EDITOR
+    // ==========================================
+
+    function renderRoscoList() {
+      const ds = currentDatasets.rosco;
+      if (!ds || !ds.preguntas) return;
+      const container = document.getElementById('roscoList');
+      container.innerHTML = ds.preguntas.map((q, i) => `
+        <div class="item-card">
+          <span class="item-number">${q.letra}</span>
+          <div class="form-row-3" style="margin-top: 10px;">
+            <div class="form-group">
+              <label>Letra</label>
+              <input type="text" id="rosco-letra-${i}" value="${q.letra}" maxlength="2" style="text-align: center; font-weight: 900; font-size: 1.2rem;">
+            </div>
+            <div class="form-group">
+              <label>Tipo</label>
+              <select id="rosco-tipo-${i}">
+                <option value="empieza" ${q.tipo === 'empieza' ? 'selected' : ''}>Empieza por...</option>
+                <option value="contiene" ${q.tipo === 'contiene' ? 'selected' : ''}>Contiene la...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Respuesta</label>
+              <input type="text" id="rosco-resp-${i}" value="${q.respuesta}" style="font-weight: 800;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Definicion</label>
+            <textarea id="rosco-def-${i}" rows="2">${q.definicion}</textarea>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function collectRoscoData() {
+      const ds = currentDatasets.rosco;
+      if (!ds) return;
+      ds.tiempoSegundos = parseInt(document.getElementById('roscoTiempo').value) || 180;
+      ds.maxFallos = parseInt(document.getElementById('roscoMaxFallos').value) || 3;
+      ds.preguntas.forEach((q, i) => {
+        const letraEl = document.getElementById('rosco-letra-' + i);
+        if (letraEl) {
+          q.letra = letraEl.value.toUpperCase();
+          q.tipo = document.getElementById('rosco-tipo-' + i).value;
+          q.respuesta = document.getElementById('rosco-resp-' + i).value;
+          q.definicion = document.getElementById('rosco-def-' + i).value;
+        }
+      });
+    }
+
+    // ==========================================
+    // FONDOS EDITOR
+    // ==========================================
+
+    function populateFondos() {
+      if (!config.background) config.background = { autoRotate: true, selected: '', videoWallpaper: '' };
+      document.getElementById('backgroundAutoRotate').value = config.background.autoRotate ? 'true' : 'false';
+      loadImagesForEditor();
+      loadVideosForEditor();
+    }
+
+    async function loadImagesForEditor() {
+      try {
+        const res = await fetch('/api/images');
+        const images = await res.json();
+        renderBackgroundsList(images || []);
+      } catch (err) {
+        renderBackgroundsList([]);
+      }
+    }
+
+    function renderBackgroundsList(images) {
+      const container = document.getElementById('backgroundsGrid');
+      container.innerHTML = '';
+      images.forEach(fn => {
+        const div = document.createElement('div');
+        div.className = 'bg-thumb' + (config.background && config.background.selected === fn ? ' selected' : '');
+        div.title = fn;
+        div.innerHTML = '<img src="/img/backgrounds/' + encodeURIComponent(fn) + '" alt="' + fn + '"><div class="label">' + fn + '</div>';
+        div.onclick = () => {
+          document.querySelectorAll('.bg-thumb').forEach(t => t.classList.remove('selected'));
+          div.classList.add('selected');
+          if (!config.background) config.background = {};
+          config.background.selected = fn;
+        };
+        container.appendChild(div);
+      });
+      if (images.length === 0) {
+        container.innerHTML = '<div class="help-text">No se encontraron imagenes de fondo.</div>';
+      }
+    }
+
+    async function loadVideosForEditor() {
+      try {
+        const res = await fetch('/api/videos');
+        const videos = await res.json();
+        const container = document.getElementById('videoWallpaperGrid');
+        container.innerHTML = '';
+        const currentVid = (config.background && config.background.videoWallpaper) || '';
+        videos.forEach(v => {
+          const div = document.createElement('div');
+          div.className = 'bg-thumb' + (currentVid === v.file ? ' selected' : '');
+          div.title = v.name || v.file;
+          const thumbSrc = '/video-wallpaper/' + encodeURIComponent(v.thumb || v.name + '.png');
+          div.innerHTML = '<img src="' + thumbSrc + '" alt="' + (v.name || v.file) + '" onerror="this.style.display=\'none\'" /><div class="label">' + (v.name || v.file) + '</div>';
+          div.onclick = () => {
+            if (!config.background) config.background = {};
+            if (config.background.videoWallpaper === v.file) {
+              // Deselect
+              config.background.videoWallpaper = '';
+              div.classList.remove('selected');
+            } else {
+              document.querySelectorAll('#videoWallpaperGrid .bg-thumb').forEach(t => t.classList.remove('selected'));
+              div.classList.add('selected');
+              config.background.videoWallpaper = v.file;
+            }
+          };
+          container.appendChild(div);
+        });
+        if (videos.length === 0) {
+          container.innerHTML = '<div class="help-text">No se encontraron videos.</div>';
+        }
+      } catch (err) {}
+    }
+
+    async function saveBackgroundConfig() {
+      if (!config.background) config.background = {};
+      config.background.autoRotate = document.getElementById('backgroundAutoRotate').value === 'true';
+      // videoWallpaper is already set in config.background by the thumbnail click handler
+
+      try {
+        await fetch('/api/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(config)
+        });
+        showToast('Configuracion de fondos guardada');
+      } catch (err) {
+        showToast('Error guardando configuracion', true);
+      }
+    }
+
+    // ==========================================
+    // TOAST
+    // ==========================================
+
+    function showToast(message, isError = false) {
+      const existing = document.querySelector('.toast');
+      if (existing) existing.remove();
+      const toast = document.createElement('div');
+      toast.className = 'toast' + (isError ? ' error' : '');
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000);
+    }
+
+    // Init
+    init();
+  </script>
+</body>
+</html>

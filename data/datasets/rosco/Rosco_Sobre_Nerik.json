@@ -1,0 +1,168 @@
+{
+  "tiempoSegundos": 260,
+  "maxFallos": 27,
+  "preguntas": [
+    {
+      "letra": "A",
+      "tipo": "empieza",
+      "definicion": "Pico más alto de los Pirineos que subí con mi familia y en el que acabé durmiéndome durante casi 2 horas.",
+      "respuesta": "Aneto"
+    },
+    {
+      "letra": "B",
+      "tipo": "empieza",
+      "definicion": "Nombre del restaurante donde nos tomaron el pelo con la mesa.",
+      "respuesta": "beata pasta"
+    },
+    {
+      "letra": "C",
+      "tipo": "empieza",
+      "definicion": "Nombre del perro que tuvimos en casa de peque.",
+      "respuesta": "conan"
+    },
+    {
+      "letra": "D",
+      "tipo": "contiene",
+      "definicion": "Deporte que jugamos en verano con un nombre medio inventado.",
+      "respuesta": "padel tenis"
+    },
+    {
+      "letra": "E",
+      "tipo": "empieza",
+      "definicion": "Mi película favorita.",
+      "respuesta": "el indomable will hunting"
+    },
+    {
+      "letra": "F",
+      "tipo": "empieza",
+      "definicion": "Postre similar a un crepe pero con Nesquik que hacen en mi familia y me encanta.",
+      "respuesta": "filloa"
+    },
+    {
+      "letra": "G",
+      "tipo": "empieza",
+      "definicion": "Nombre del osito de peluche que siempre ha estado conmigo.",
+      "respuesta": "guaguito"
+    },
+    {
+      "letra": "H",
+      "tipo": "empieza",
+      "definicion": "Juego al que me pillas siempre jugando cuando te espero en el portal.",
+      "respuesta": "Clash Royale"
+    },
+    {
+      "letra": "I",
+      "tipo": "empieza",
+      "definicion": "Serie de fútbol de dibujos que me vi varias veces.",
+      "respuesta": "Inazuma Eleven"
+    },
+    {
+      "letra": "J",
+      "tipo": "empieza",
+      "definicion": "País que me gustaría visitar al menos durante un mes.",
+      "respuesta": "Japón"
+    },
+    {
+      "letra": "K",
+      "tipo": "empieza",
+      "definicion": "Nombre de la protagonista de una colección de libros de \"magia\" que me leí de pequeño.",
+      "respuesta": "Kika"
+    },
+    {
+      "letra": "L",
+      "tipo": "empieza",
+      "definicion": "Lugar donde veraneábamos mi familia y yo cuando era pequeño.",
+      "respuesta": "Lanzarote"
+    },
+    {
+      "letra": "M",
+      "tipo": "empieza",
+      "definicion": "El último apellido que me sé mío y con el que me identifico.",
+      "respuesta": "Mirón"
+    },
+    {
+      "letra": "N",
+      "tipo": "contiene",
+      "definicion": "Todos se pelean por quitármelos de encima.",
+      "respuesta": "Granos"
+    },
+    {
+      "letra": "Ñ",
+      "tipo": "contiene",
+      "definicion": "Una de las dos cosas que tendría mi eternidad.",
+      "respuesta": "Montañas"
+    },
+    {
+      "letra": "O",
+      "tipo": "empieza",
+      "definicion": "El nombre del animal en el que si tuviera que elegir me reencarnaría.",
+      "respuesta": "Orca"
+    },
+    {
+      "letra": "P",
+      "tipo": "empieza",
+      "definicion": "Mi contacto de las altas esferas.",
+      "respuesta": "Paco"
+    },
+    {
+      "letra": "Q",
+      "tipo": "contiene",
+      "definicion": "Postre que me encanta comer y preparar en casa.",
+      "respuesta": "Tarta de queso"
+    },
+    {
+      "letra": "R",
+      "tipo": "empieza",
+      "definicion": "Objeto con el que me acabé quemando la ceja izquierda con 3 años.",
+      "respuesta": "Radiador"
+    },
+    {
+      "letra": "S",
+      "tipo": "empieza",
+      "definicion": "Me acusan de comer demasiados.",
+      "respuesta": "Sanjacobos"
+    },
+    {
+      "letra": "T",
+      "tipo": "empieza",
+      "definicion": "Mi restaurante favorito de Madrid al que hemos ido un montón de veces ya.",
+      "respuesta": "Tandoori Station"
+    },
+    {
+      "letra": "U",
+      "tipo": "contiene",
+      "definicion": "Mote cariñoso que me dices cuando quieres pedirme algo y haces de nena pequeña.",
+      "respuesta": "Bebuchi"
+    },
+    {
+      "letra": "V",
+      "tipo": "empieza",
+      "definicion": "Lo necesito para comer si estoy solo.",
+      "respuesta": "Vídeo"
+    },
+    {
+      "letra": "W",
+      "tipo": "empieza",
+      "definicion": "Deporte que practiqué en mis tiempos mozos durante casi 4 años.",
+      "respuesta": "Waterpolo"
+    },
+    {
+      "letra": "X",
+      "tipo": "contiene",
+      "definicion": "Mi pasatiempo favorito cuando quedaba con mis amigos por Collado Mediano y todos esperaban qué iba a ser.",
+      "respuesta": "Experimentos"
+    },
+    {
+      "letra": "Y",
+      "tipo": "empieza",
+      "definicion": "Nombre de la salsa que usamos para hacer nuestros fideos con pollo.",
+      "respuesta": "Yakisoba"
+    },
+    {
+      "letra": "Z",
+      "tipo": "contiene",
+      "definicion": "Cuando competía en natación mi entrenadora siempre me decía: \"Tienes que comer más...\"",
+      "respuesta": "Garbanzos"
+    }
+  ]
+}

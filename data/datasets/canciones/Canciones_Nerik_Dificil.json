@@ -1,0 +1,137 @@
+{
+  "tiempoSegundos": 30,
+  "pistas": [
+    {
+      "id": 1,
+      "respuesta": "love me not",
+      "artista": "Ravyn Lenae",
+      "youtubeUrl": "https://youtu.be/NB7WuqWzDhw",
+      "audioUrl": "/audio/canciones/Ravyn Lenae - Love Me Not (Lyrics).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Canción del género pop con la que estuve hasta escuchando y leyendo partituras para aprendérmela en el piano, y que además conoces.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos de la cancion",
+          "audioUrl": "/audio/canciones/pista_2_Ravyn_Lenae_-_Love_Me_Not_Lyrics.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "Su título tiene que ver con el amor y se repite en el estribillo.",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos del estribillo",
+          "audioUrl": "/audio/canciones/pista_4_Ravyn_Lenae_-_Love_Me_Not_Lyrics.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "El título es una reordenación de 'Not Love Me'. Piensa bien bobii no doy mas pistas jajaja.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "respuesta": "sailor song",
+      "artista": "gigi perez",
+      "youtubeUrl": "https://youtu.be/1lrFsXkT_rM",
+      "audioUrl": "/audio/canciones/Gigi Perez - Sailor Song (Official Music Video).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Se trata de una canción en inglés que te envié, en la que suena una guitarra principalmente, de cuando te mandaba canciones que me gustaban y escucho en mis momentos sensibles.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos de la cancion",
+          "audioUrl": "/audio/canciones/pista_2_Gigi_Perez_-_Sailor_Song_Official_Music_Video.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "Habla del enamoramiento profundo de la cantante hacia un 'marinero', pero en inglés claro. Igual es rarilla la palabra en inglés, no se intuye jajaja.",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos del estribillo",
+          "audioUrl": "/audio/canciones/pista_4_Gigi_Perez_-_Sailor_Song_Official_Music_Video.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "Es la 'canción' que le dedica a su pareja que es 'marinero'. En inglés y en el orden en el que se escribe en inglés que siempre es al revés ya sabes... 'marinero' 'canción' jeje.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "respuesta": "todo maldito",
+      "artista": "tussiwarriors",
+      "youtubeUrl": "https://youtu.be/_mXMy57Eptg",
+      "audioUrl": "/audio/canciones/TODO MALDITO - TUSSIWARRIORS (VIDEO OFICIAL).mp3",
+      "pistasProgresivas": [
+        {
+          "numero": 1,
+          "tipo": "texto",
+          "descripcion": "Bueno, esta te va a gustar. Se trata de una canción del grupo que escuchamos Pablo y yo en el coche. A ver si te suena algún nombre aunque no creo jajajaja.",
+          "audioUrl": "",
+          "puntuacion": 5
+        },
+        {
+          "numero": 2,
+          "tipo": "audio",
+          "descripcion": "Escucha dos segundos de la cancion",
+          "audioUrl": "/audio/canciones/pista_2_TODO_MALDITO_-_TUSSIWARRIORS_VIDEO_OFICIAL.mp3",
+          "puntuacion": 4
+        },
+        {
+          "numero": 3,
+          "tipo": "texto",
+          "descripcion": "Creo que no ha servido de mucho... Los artistas son los tussiwarriors, y esta es una de sus primeras canciones. El título lo repiten muchísimo en el estribillo y este dice: \"Entro al boliche _ _ _ _  _ _ _ _ _ _ _, \"\", \"\", soy un MALDITO!\".",
+          "audioUrl": "",
+          "puntuacion": 3
+        },
+        {
+          "numero": 4,
+          "tipo": "audio",
+          "descripcion": "Escucha cinco segundos del estribillo",
+          "audioUrl": "/audio/canciones/pista_4_TODO_MALDITO_-_TUSSIWARRIORS_VIDEO_OFICIAL.mp3",
+          "puntuacion": 2
+        },
+        {
+          "numero": 5,
+          "tipo": "texto",
+          "descripcion": "En la anterior pista te di una de las dos palabras del título: \"_ _ _ _  MALDITO\". Es una palabra que se suele usar para referirse a la totalidad de algo.",
+          "audioUrl": "",
+          "puntuacion": 1
+        }
+      ]
+    }
+  ]
+}

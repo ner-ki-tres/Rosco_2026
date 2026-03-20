@@ -1,0 +1,400 @@
+/* ==========================================
+   El precio del cariño
+   ========================================== */
+
+.millon-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.millon-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.millon-pill {
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 800;
+  color: var(--ac-text);
+}
+
+.millon-timer-track {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.millon-timer-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ac-green), var(--ac-yellow), var(--ac-orange));
+  transition: width 1s linear;
+}
+
+.millon-question {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--ac-text);
+  margin: 0 0 8px;
+}
+
+.millon-hint {
+  margin: 0;
+  color: var(--ac-text-light);
+  font-weight: 700;
+}
+
+.millon-presenter-wrap {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+
+.millon-presenter-avatar {
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.millon-presenter-avatar img {
+  width: 100%;
+  max-width: 128px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.millon-presenter-name {
+  font-weight: 900;
+  color: var(--ac-text);
+  text-align: center;
+}
+
+.millon-presenter-bubble {
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  padding: 14px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.millon-presenter-bubble::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  bottom: 28px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 14px 12px 0;
+  border-color: transparent rgba(0, 0, 0, 0.08) transparent transparent;
+}
+
+.millon-presenter-bubble::after {
+  content: '';
+  position: absolute;
+  left: -11px;
+  bottom: 30px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 12px 10px 0;
+  border-color: transparent #fff transparent transparent;
+}
+
+.millon-presenter-msg {
+  margin-top: auto;
+  background: rgba(31, 45, 61, 0.08);
+  color: var(--ac-text);
+  border: 1px solid rgba(31, 45, 61, 0.14);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  display: none;
+}
+
+.millon-presenter-msg.show {
+  display: block;
+}
+
+.millon-presenter-msg.error {
+  background: rgba(192, 57, 43, 0.12);
+  color: #9e2316;
+  border-color: rgba(192, 57, 43, 0.28);
+}
+
+.millon-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.millon-option {
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 12px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  perspective: 900px;
+  transition: transform 0.2s ease;
+}
+
+.millon-option-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.millon-trapdoor {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  height: 56%;
+  border-radius: 10px;
+  border: 1px solid rgba(45, 33, 22, 0.25);
+  background: repeating-linear-gradient(
+    90deg,
+    #b9854f 0,
+    #b9854f 16px,
+    #ab7442 16px,
+    #ab7442 22px
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform-origin: top center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.millon-option::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + 56% - 2px);
+  height: 3px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  opacity: 0;
+  z-index: 3;
+}
+
+.millon-option.trap-opening .millon-trapdoor {
+  opacity: 1;
+  animation: millonTrapOpen 780ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.millon-option.trap-opening::before {
+  opacity: 0.75;
+}
+
+.millon-option.trap-opening .millon-option-inner {
+  animation: millonTrapFall 780ms ease-in forwards;
+}
+
+@keyframes millonTrapOpen {
+  0% { transform: rotateX(0deg); filter: brightness(1); }
+  35% { transform: rotateX(-35deg); }
+  100% { transform: rotateX(-92deg); filter: brightness(0.82); }
+}
+
+@keyframes millonTrapFall {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  20% { transform: translateY(-2px) scale(1.01); }
+  100% { transform: translateY(64px) scale(0.95); opacity: 0; }
+}
+
+.millon-options.millon-selecting .millon-option {
+  cursor: pointer;
+}
+
+.millon-options.millon-selecting .millon-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+.millon-option.selected {
+  border-color: var(--ac-blue-dark);
+  box-shadow: 0 0 0 3px rgba(91, 163, 201, 0.18);
+}
+
+.millon-option.correct {
+  border-color: var(--ac-green-dark);
+  background: rgba(120, 200, 0, 0.14);
+}
+
+.millon-option.wrong {
+  border-color: #c0392b;
+  background: rgba(231, 76, 60, 0.12);
+}
+
+.millon-option-title {
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--ac-text);
+}
+
+.millon-bet-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.millon-bet-row input {
+  width: 100%;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+}
+
+.millon-mini {
+  padding: 8px 10px;
+  font-size: 0.8rem;
+}
+
+.millon-minus {
+  background: var(--ac-red) !important;
+  color: #fff !important;
+}
+
+.millon-plus {
+  background: var(--ac-blue-dark) !important;
+  color: #fff !important;
+}
+
+.millon-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  font-weight: 700;
+  color: var(--ac-text);
+}
+
+.millon-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .millon-presenter-wrap {
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+  }
+
+  .millon-presenter-avatar {
+    padding: 8px;
+  }
+
+  .millon-presenter-avatar img {
+    max-width: 92px;
+  }
+
+  .millon-presenter-name {
+    font-size: 0.86rem;
+  }
+
+  .millon-presenter-bubble {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .millon-presenter-msg {
+    font-size: 0.84rem;
+    padding: 7px 9px;
+  }
+
+  .millon-options {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .millon-container {
+    padding: 14px;
+  }
+
+  .millon-question {
+    font-size: 1.08rem;
+  }
+
+  .millon-option {
+    padding: 10px;
+  }
+
+  .millon-trapdoor {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .millon-option::before {
+    left: 6px;
+    right: 6px;
+    bottom: calc(6px + 56% - 2px);
+  }
+
+  .millon-bet-row {
+    gap: 6px;
+  }
+
+  .millon-mini {
+    padding: 7px 8px;
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .millon-presenter-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .millon-presenter-avatar {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .millon-presenter-avatar img {
+    width: 68px;
+    max-width: 68px;
+  }
+
+  .millon-presenter-bubble::before,
+  .millon-presenter-bubble::after {
+    display: none;
+  }
+
+  .millon-options {
+    margin-top: 0px;
+    grid-template-columns: 1fr;
+  }
+}

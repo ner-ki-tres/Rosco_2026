@@ -1,0 +1,61 @@
+{
+  "name": "default",
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "Cual de estos animales vive habitualmente en el agua?",
+      "opciones": ["Delfin", "Tigre", "Jirafa", "Lobo"],
+      "correctaIndex": 0,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 2,
+      "pregunta": "Cual de estos paises esta en Sudamerica?",
+      "opciones": ["Portugal", "Argentina", "Canada", "Japon"],
+      "correctaIndex": 1,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 3,
+      "pregunta": "Cuantos dias tiene una semana?",
+      "opciones": ["5", "8", "7", "6"],
+      "correctaIndex": 2,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 4,
+      "pregunta": "Que planeta es conocido como el planeta rojo?",
+      "opciones": ["Venus", "Marte", "Neptuno", "Mercurio"],
+      "correctaIndex": 1,
+      "tiempoSegundos": 45
+    },
+    {
+      "id": 5,
+      "pregunta": "En que continente esta Egipto?",
+      "opciones": ["Africa", "Europa", "Oceania"],
+      "correctaIndex": 0,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 6,
+      "pregunta": "Que numero es primo?",
+      "opciones": ["21", "17", "39"],
+      "correctaIndex": 1,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 7,
+      "pregunta": "Que idioma se habla principalmente en Brasil?",
+      "opciones": ["Portugues", "Espanol", "Italiano"],
+      "correctaIndex": 0,
+      "tiempoSegundos": 40
+    },
+    {
+      "id": 8,
+      "pregunta": "Todo o nada: cual es la capital de Italia?",
+      "opciones": ["Roma", "Milan"],
+      "correctaIndex": 0,
+      "tiempoSegundos": 30
+    }
+  ]
+}

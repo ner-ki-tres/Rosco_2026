@@ -1,0 +1,168 @@
+{
+  "tiempoSegundos": 180,
+  "maxFallos": 100,
+  "preguntas": [
+    {
+      "letra": "A",
+      "tipo": "empieza",
+      "definicion": "Fruto del almendro, muy usado en repostería",
+      "respuesta": "ALMENDRA"
+    },
+    {
+      "letra": "B",
+      "tipo": "empieza",
+      "definicion": "Embarcación pequeña para navegar",
+      "respuesta": "BARCA"
+    },
+    {
+      "letra": "C",
+      "tipo": "empieza",
+      "definicion": "Instrumento musical de cuerda que se toca con arco",
+      "respuesta": "CHELO"
+    },
+    {
+      "letra": "D",
+      "tipo": "empieza",
+      "definicion": "Mamífero marino también conocido como tonina",
+      "respuesta": "DELFÍN"
+    },
+    {
+      "letra": "E",
+      "tipo": "empieza",
+      "definicion": "Animal con púas que se hace bola para protegerse",
+      "respuesta": "ERIZO"
+    },
+    {
+      "letra": "F",
+      "tipo": "empieza",
+      "definicion": "Torre alta con luz que guía a los barcos",
+      "respuesta": "FARO"
+    },
+    {
+      "letra": "G",
+      "tipo": "empieza",
+      "definicion": "Felino doméstico, también llamado minino",
+      "respuesta": "GATO"
+    },
+    {
+      "letra": "H",
+      "tipo": "empieza",
+      "definicion": "Deporte que se juega sobre hielo con un disco",
+      "respuesta": "HOCKEY"
+    },
+    {
+      "letra": "I",
+      "tipo": "empieza",
+      "definicion": "Territorio rodeado de agua por todas partes",
+      "respuesta": "ISLA"
+    },
+    {
+      "letra": "J",
+      "tipo": "empieza",
+      "definicion": "Pieza del ajedrez que se mueve en forma de L",
+      "respuesta": "JINETE"
+    },
+    {
+      "letra": "K",
+      "tipo": "contiene",
+      "definicion": "Contiene la K: Deporte de origen japonés que significa 'camino de la mano vacía'",
+      "respuesta": "KARATE"
+    },
+    {
+      "letra": "L",
+      "tipo": "empieza",
+      "definicion": "Astro que ilumina la Tierra por las noches",
+      "respuesta": "LUNA"
+    },
+    {
+      "letra": "M",
+      "tipo": "empieza",
+      "definicion": "Insecto lepidóptero con alas de colores",
+      "respuesta": "MARIPOSA"
+    },
+    {
+      "letra": "N",
+      "tipo": "empieza",
+      "definicion": "Masa gaseosa suspendida en la atmósfera",
+      "respuesta": "NUBE"
+    },
+    {
+      "letra": "Ñ",
+      "tipo": "contiene",
+      "definicion": "Contiene la Ñ: Persona que enseña en una escuela",
+      "respuesta": "ENSEÑANZA"
+    },
+    {
+      "letra": "O",
+      "tipo": "empieza",
+      "definicion": "Estación del año entre verano e invierno",
+      "respuesta": "OTOÑO"
+    },
+    {
+      "letra": "P",
+      "tipo": "empieza",
+      "definicion": "Ave tropical de colores vistosos que puede imitar sonidos",
+      "respuesta": "PAPAGAYO"
+    },
+    {
+      "letra": "Q",
+      "tipo": "empieza",
+      "definicion": "Alimento lácteo sólido hecho con leche cuajada",
+      "respuesta": "QUESO"
+    },
+    {
+      "letra": "R",
+      "tipo": "empieza",
+      "definicion": "Instrumento para medir longitudes, también norma a seguir",
+      "respuesta": "REGLA"
+    },
+    {
+      "letra": "S",
+      "tipo": "empieza",
+      "definicion": "Astro rey del sistema solar",
+      "respuesta": "SOL"
+    },
+    {
+      "letra": "T",
+      "tipo": "empieza",
+      "definicion": "Reptil con caparazón que vive muchos años",
+      "respuesta": "TORTUGA"
+    },
+    {
+      "letra": "U",
+      "tipo": "empieza",
+      "definicion": "Fruta pequeña y oscura que crece en racimos en la vid",
+      "respuesta": "UVA"
+    },
+    {
+      "letra": "V",
+      "tipo": "empieza",
+      "definicion": "Instrumento musical de cuerda que se toca con arco apoyado en el hombro",
+      "respuesta": "VIOLÍN"
+    },
+    {
+      "letra": "W",
+      "tipo": "contiene",
+      "definicion": "Contiene la W: Red mundial de información accesible mediante navegadores",
+      "respuesta": "WEB"
+    },
+    {
+      "letra": "X",
+      "tipo": "contiene",
+      "definicion": "Contiene la X: Que viene de otro país o lugar lejano",
+      "respuesta": "EXÓTICO"
+    },
+    {
+      "letra": "Y",
+      "tipo": "contiene",
+      "definicion": "Contiene la Y: Persona que practica el tiro en competiciones",
+      "respuesta": "YÓQUEY"
+    },
+    {
+      "letra": "Z",
+      "tipo": "empieza",
+      "definicion": "Calzado que cubre el pie, generalmente de material ligero",
+      "respuesta": "ZAPATILLA"
+    }
+  ]
+}

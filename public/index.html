@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pasapalabra de Bobis</title>
+  <link rel="icon" type="image/png" href="img/titulo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/characters.css">
+  <link rel="stylesheet" href="css/canciones.css">
+  <link rel="stylesheet" href="css/palabras.css">
+  <link rel="stylesheet" href="css/rosco.css">
+  <link rel="stylesheet" href="css/millon.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Fondo con imagen -->
+  <div class="ac-background" id="acBackground"></div>
+
+  <!-- Fondo con video -->
+  <video class="ac-video-background" id="acVideoBackground" muted loop playsinline></video>
+
+  <!-- Capa de bichitos Animal Crossing -->
+  <div class="critters-layer" id="crittersLayer"></div>
+
+  <!-- Personajes caminantes (visibles solo en pantalla de selección de juegos) -->
+  <div class="walkers-layer" id="walkersLayer" style="display:none"></div>
+
+  <!-- ============================================
+       PANTALLA DE CARGA / SPLASH
+       ============================================ -->
+  <div class="screen active" id="splashScreen">
+    <div class="splash-content">
+      <img src="img/titulo.png" alt="Pasapalabra de Bobis" class="splash-title-img" />
+      <div class="enter-bar" id="enterBar">
+        Presiona Enter para empezar a jugar ↵
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       MODAL: Selección de usuario
+       ============================================ -->
+  <div class="modal-overlay" id="userSelectModal" style="display:none;">
+    <div class="modal-box user-select-box">
+      <h3 class="modal-title">Quien juega?</h3>
+      <div class="user-select-row" id="userSelectRow">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       MODAL: Selección de dataset
+       ============================================ -->
+  <div class="modal-overlay" id="datasetSelectModal" style="display:none;">
+    <div class="modal-box dataset-select-box">
+      <h3 class="modal-title">Elige un set de preguntas</h3>
+      <div class="dataset-list" id="datasetList">
+        <!-- Filled dynamically -->
+      </div>
+      <div class="modal-actions">
+        <button class="ac-button" onclick="closeDatasetModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       MODAL: Leaderboard
+       ============================================ -->
+  <div class="modal-overlay" id="leaderboardModal" style="display:none;">
+    <div class="modal-box leaderboard-box">
+      <h3 class="modal-title" id="leaderboardTitle">Clasificacion</h3>
+      <div class="leaderboard-content" id="leaderboardContent">
+        <!-- Filled dynamically -->
+      </div>
+      <div class="modal-actions">
+        <button class="ac-button ac-button-danger" onclick="resetLeaderboardScores()">Borrar marcadores</button>
+        <button class="ac-button" onclick="closeLeaderboard()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       MODAL: Configuración de fondo
+       ============================================ -->
+  <div class="modal-overlay" id="bgConfigModal" style="display:none;">
+    <div class="modal-box bg-config-box">
+      <h3 class="modal-title">Configuración</h3>
+
+      <!-- Tabs -->
+      <div class="bg-tabs">
+        <button class="bg-tab active" data-tab="general" onclick="switchBgTab('general')">General</button>
+        <button class="bg-tab" data-tab="images" onclick="switchBgTab('images')">Imágenes</button>
+        <button class="bg-tab" data-tab="videos" onclick="switchBgTab('videos')">Fondos animados</button>
+      </div>
+
+      <!-- General settings -->
+      <div class="bg-tab-content active" id="bgTabGeneral">
+        <div class="bg-general-top-row">
+          <label class="bg-general-sound" aria-label="Silenciar personajes">
+            <span class="config-section-title">Sonido de personajes</span>
+            <input type="checkbox" id="charMuteToggle" onchange="toggleCharacterMute(this.checked)" />
+          </label>
+        </div>
+
+        <div class="bg-general-divider"></div>
+
+        <div class="bg-general-grid">
+          <div class="config-section bg-general-col">
+            <h4 class="config-section-title">Marcadores</h4>
+            <div class="config-reset-scores">
+              <button class="editor-btn editor-btn-danger" onclick="resetScores('all')">Borrar todos los marcadores</button>
+            </div>
+          </div>
+          <div class="config-section bg-general-col">
+            <h4 class="config-section-title">Herramientas</h4>
+            <div class="config-reset-scores">
+              <button class="editor-btn editor-btn-secondary" onclick="openExternalEditor()">Abrir editor avanzado</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Static images grid -->
+      <div class="bg-tab-content" id="bgTabImages">
+        <div class="bg-options-bar">
+          <label class="bg-toggle">
+            <input type="checkbox" id="bgAutoRotate" onchange="toggleAutoRotate(this.checked)" />
+            <span>Rotar automáticamente</span>
+          </label>
+        </div>
+        <div class="video-select-list" id="bgImagesList"></div>
+      </div>
+
+      <!-- Video wallpapers grid -->
+      <div class="bg-tab-content" id="bgTabVideos">
+        <div class="video-select-list" id="bgVideosList"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="ac-button" onclick="clearBackground()">Sin fondo</button>
+        <button class="ac-button" onclick="closeBgConfig()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       PANTALLA DE SELECCIÓN DE JUEGOS
+       ============================================ -->
+  <div class="screen" id="homeScreen">
+    <div class="game-select-panel">
+      <div class="game-panel-header">
+        <button class="screen-back-arrow" onclick="goToSplash()" title="Volver">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <h2 class="game-panel-title">Elige una prueba</h2>
+        <button class="game-panel-config-btn" onclick="openBgConfig()" title="Configuración">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+
+      <div class="game-cards-row">
+        <!-- Canciones -->
+        <div class="game-card" data-game="canciones">
+          <button class="game-card-trophy" onclick="openLeaderboard('canciones')" title="Clasificación">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14v2h2v6h-2.02c-.52 2.61-2.27 4.58-4.48 5.39V19h3v2H6.5v-2h3v-2.61C7.29 15.58 5.54 13.61 5.02 11H3V5h2V3zm2 2v4.34C7 12.13 9.24 14 12 14s5-1.87 5-4.66V5H7zM3 7v2h2V7H3zm16 0v2h2V7h-2z"/></svg>
+          </button>
+          <button class="game-card-edit" onclick="openGameEditor('canciones')" title="Editar prueba">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </button>
+          <div class="game-card-img">
+            <img src="/img/juegos/canciones.png" alt="La Pista Musical" onerror="this.style.display='none'" />
+          </div>
+          <h3 class="game-card-name">La Pista Musical</h3>
+          <div class="game-card-dataset">
+            <select id="cardDatasetCanciones" onchange="onCardDatasetChange('canciones')"></select>
+          </div>
+          <button class="game-card-play" onclick="startGame('canciones')">Jugar</button>
+        </div>
+
+        <!-- Palabras -->
+        <div class="game-card" data-game="palabras">
+          <button class="game-card-trophy" onclick="openLeaderboard('palabras')" title="Clasificación">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14v2h2v6h-2.02c-.52 2.61-2.27 4.58-4.48 5.39V19h3v2H6.5v-2h3v-2.61C7.29 15.58 5.54 13.61 5.02 11H3V5h2V3zm2 2v4.34C7 12.13 9.24 14 12 14s5-1.87 5-4.66V5H7zM3 7v2h2V7H3zm16 0v2h2V7h-2z"/></svg>
+          </button>
+          <button class="game-card-edit" onclick="openGameEditor('palabras')" title="Editar prueba">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </button>
+          <div class="game-card-img">
+            <img src="/img/juegos/palabras.png" alt="Las 9 Palabras" />
+          </div>
+          <h3 class="game-card-name">Las 9 Palabras</h3>
+          <div class="game-card-dataset">
+            <select id="cardDatasetPalabras" onchange="onCardDatasetChange('palabras')"></select>
+          </div>
+          <button class="game-card-play" onclick="startGame('palabras')">Jugar</button>
+        </div>
+
+        <!-- Rosco -->
+        <div class="game-card" data-game="rosco">
+          <button class="game-card-trophy" onclick="openLeaderboard('rosco')" title="Clasificación">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14v2h2v6h-2.02c-.52 2.61-2.27 4.58-4.48 5.39V19h3v2H6.5v-2h3v-2.61C7.29 15.58 5.54 13.61 5.02 11H3V5h2V3zm2 2v4.34C7 12.13 9.24 14 12 14s5-1.87 5-4.66V5H7zM3 7v2h2V7H3zm16 0v2h2V7h-2z"/></svg>
+          </button>
+          <button class="game-card-edit" onclick="openGameEditor('rosco')" title="Editar prueba">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </button>
+          <div class="game-card-img">
+            <img src="/img/juegos/rosco.png" alt="El Rosco Final" />
+          </div>
+          <h3 class="game-card-name">El Rosco Final</h3>
+          <div class="game-card-dataset">
+            <select id="cardDatasetRosco" onchange="onCardDatasetChange('rosco')"></select>
+          </div>
+          <button class="game-card-play" onclick="startGame('rosco')">Jugar</button>
+        </div>
+
+        <!-- El precio del cariño -->
+        <div class="game-card" data-game="millon">
+          <button class="game-card-trophy" onclick="openLeaderboard('millon')" title="Clasificación">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14v2h2v6h-2.02c-.52 2.61-2.27 4.58-4.48 5.39V19h3v2H6.5v-2h3v-2.61C7.29 15.58 5.54 13.61 5.02 11H3V5h2V3zm2 2v4.34C7 12.13 9.24 14 12 14s5-1.87 5-4.66V5H7zM3 7v2h2V7H3zm16 0v2h2V7h-2z"/></svg>
+          </button>
+          <button class="game-card-edit" onclick="openGameEditor('millon')" title="Editar prueba">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </button>
+          <div class="game-card-img">
+            <img src="/img/juegos/precio.png" alt="El precio del cariño" onerror="this.style.display='none'" />
+          </div>
+          <h3 class="game-card-name">El precio del cariño</h3>
+          <div class="game-card-dataset">
+            <select id="cardDatasetMillon" onchange="onCardDatasetChange('millon')"></select>
+          </div>
+          <button class="game-card-play" onclick="startGame('millon')">Jugar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla del juego de Canciones -->
+  <div class="screen" id="cancionesScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="goHome()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">La Pista Musical</h2>
+      <div class="screen-score-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span id="cancionesScore">0</span>
+      </div>
+    </div>
+    <div class="game-content" id="cancionesContent"></div>
+  </div>
+
+  <!-- Pantalla del juego de Palabras -->
+  <div class="screen" id="palabrasScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="goHome()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">Las 9 Palabras</h2>
+      <div class="screen-score-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span id="palabrasScore">0</span>
+      </div>
+    </div>
+    <div class="game-content" id="palabrasContent"></div>
+  </div>
+
+  <!-- Pantalla del Rosco — layout 2/3 + 1/3 -->
+  <div class="screen" id="roscoScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="goHome()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">El Rosco Final</h2>
+    </div>
+    <div class="rosco-layout" id="roscoLayout">
+      <!-- Columna izquierda: rosco + input (2/3) -->
+      <div class="rosco-left" id="roscoContent"></div>
+      
+      <!-- Columna derecha: Canela + definición (1/3) -->
+      <div class="rosco-right" id="roscoRight">
+        <div class="rosco-canela-container">
+          <img src="img/characters/Canela.png" alt="Canela" class="rosco-canela-img" id="roscoCanelaImg" />
+        </div>
+        <div class="rosco-definition-box" id="roscoDefinitionBox">
+          <div class="rosco-def-letter" id="roscoDefLetter">A</div>
+          <div class="rosco-def-tipo" id="roscoDefTipo">Empieza por "A"</div>
+          <div class="rosco-def-text" id="roscoDefText">Esperando...</div>
+          <button class="rosco-tts-btn" onclick="speakDefinition()" title="Leer definición">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Vista alternada en tablet: Avatar clickeable para toggle rosco/definición -->
+      <div class="rosco-tablet-avatar-overlay" id="roscoTabletAvatarOverlay">
+        <button class="rosco-tablet-toggle-btn" onclick="toggleRoscoTabletView('rosco')" title="Ver rosco">
+          <img src="" id="roscoTabletAvatarImg" alt="Tu avatar" class="rosco-tablet-avatar-btn" />
+          <span>Ver rosco</span>
+        </button>
+      </div>
+      <div class="rosco-tablet-canela-overlay" id="roscoTabletCanelaOverlay">
+        <button class="rosco-tablet-toggle-btn" onclick="toggleRoscoTabletView('definition')" title="Ver definición">
+          <img src="img/characters/Canela.png" alt="Canela" class="rosco-tablet-canela-btn" id="roscoTabletCanelaBtn" />
+          <span>Ver pista</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla del juego El precio del cariño -->
+  <div class="screen" id="millonScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="goHome()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">El precio del cariño</h2>
+    </div>
+    <div class="game-content" id="millonContent"></div>
+  </div>
+
+  <!-- ============================================
+       EDITOR: Canciones
+       ============================================ -->
+  <div class="screen" id="editorCancionesScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="closeGameEditor()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">Editar: La Pista Musical</h2>
+    </div>
+    <div class="editor-content" id="editorCancionesContent">
+      <div class="editor-dataset-bar">
+        <label>Dataset:</label>
+        <select id="edDatasetCanciones" onchange="edLoadDataset('canciones')"></select>
+        <button class="editor-btn editor-btn-secondary" onclick="edNewDataset('canciones')">Nuevo</button>
+        <button class="editor-btn editor-btn-danger" onclick="edDeleteDataset('canciones')">Eliminar</button>
+      </div>
+      <div class="editor-card">
+        <h3 class="editor-card-title">Configuración General</h3>
+        <div class="editor-form-group">
+          <label>Tiempo por pista (segundos)</label>
+          <input type="number" id="edCancionesTiempo" min="5" max="120" value="30">
+        </div>
+      </div>
+      <div id="edCancionesList"></div>
+      <div class="editor-actions-center">
+        <button class="editor-btn editor-btn-secondary" onclick="edAddCancion()">Añadir Pista</button>
+      </div>
+      <button class="editor-btn editor-btn-save" onclick="edSaveDataset('canciones')">Guardar Dataset</button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       EDITOR: Palabras
+       ============================================ -->
+  <div class="screen" id="editorPalabrasScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="closeGameEditor()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">Editar: Las 9 Palabras</h2>
+    </div>
+    <div class="editor-content" id="editorPalabrasContent">
+      <div class="editor-dataset-bar">
+        <label>Dataset:</label>
+        <select id="edDatasetPalabras" onchange="edLoadDataset('palabras')"></select>
+        <button class="editor-btn editor-btn-secondary" onclick="edNewDataset('palabras')">Nuevo</button>
+        <button class="editor-btn editor-btn-danger" onclick="edDeleteDataset('palabras')">Eliminar</button>
+      </div>
+      <div class="editor-card">
+        <h3 class="editor-card-title">Configuración General</h3>
+        <div class="editor-form-row">
+          <div class="editor-form-group">
+            <label>Tiempo para memorizar (seg)</label>
+            <input type="number" id="edPalabrasTiempoMem" min="5" max="120" value="30">
+          </div>
+          <div class="editor-form-group">
+            <label>Tiempo para responder (seg)</label>
+            <input type="number" id="edPalabrasTiempoRes" min="10" max="180" value="60">
+          </div>
+        </div>
+      </div>
+      <div id="edPalabrasList"></div>
+      <div class="editor-actions-center">
+        <button class="editor-btn editor-btn-secondary" onclick="edAddConjunto()">Añadir Conjunto</button>
+      </div>
+      <button class="editor-btn editor-btn-save" onclick="edSaveDataset('palabras')">Guardar Dataset</button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       EDITOR: Rosco
+       ============================================ -->
+  <div class="screen" id="editorRoscoScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="closeGameEditor()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">Editar: El Rosco Final</h2>
+    </div>
+    <div class="editor-content" id="editorRoscoContent">
+      <div class="editor-actions-center" style="margin-bottom:8px">
+        <button class="editor-btn editor-btn-secondary" onclick="edNewDataset('rosco')">+ Nuevo Dataset</button>
+      </div>
+      <div class="rosco-dataset-gallery" id="roscoDatasetGallery">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       EDITOR: El precio del cariño
+       ============================================ -->
+  <div class="screen" id="editorMillonScreen">
+    <div class="screen-header">
+      <button class="screen-back-arrow" onclick="closeGameEditor()" title="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h2 class="screen-title">Editar: El precio del cariño</h2>
+    </div>
+    <div class="editor-content" id="editorMillonContent">
+      <div class="editor-dataset-bar">
+        <label>Dataset:</label>
+        <select id="edDatasetMillon" onchange="edLoadDataset('millon')"></select>
+        <button class="editor-btn editor-btn-secondary" onclick="edNewDataset('millon')">Nuevo</button>
+        <button class="editor-btn editor-btn-danger" onclick="edDeleteDataset('millon')">Eliminar</button>
+      </div>
+      <div class="editor-card">
+        <h3 class="editor-card-title">Configuración del juego</h3>
+        <p class="help-text" id="edMillonCounter">Preguntas: 0 / 8</p>
+      </div>
+      <div id="edMillonList"></div>
+      <div class="editor-actions-center">
+        <button class="editor-btn editor-btn-secondary" onclick="edAddMillonQuestion()">Añadir pregunta</button>
+      </div>
+      <button class="editor-btn editor-btn-save" onclick="edSaveDataset('millon')">Guardar Dataset</button>
+    </div>
+  </div>
+
+  <!-- Modal: Editar dataset de Rosco -->
+  <div class="modal-overlay" id="roscoEditModal" style="display:none;">
+    <div class="modal-box rosco-edit-box">
+      <h3 class="modal-title" id="roscoEditModalTitle">Editar Dataset</h3>
+      <div class="rosco-edit-modal-content">
+        <div class="editor-card">
+          <h3 class="editor-card-title">Configuración General</h3>
+          <div class="editor-form-row">
+            <div class="editor-form-group">
+              <label>Tiempo total (segundos)</label>
+              <input type="number" id="edRoscoTiempo" min="30" max="600" value="180">
+            </div>
+            <div class="editor-form-group">
+              <label>Máximo de fallos permitidos</label>
+              <input type="number" id="edRoscoMaxFallos" min="1" max="27" value="3">
+            </div>
+          </div>
+        </div>
+        <div id="edRoscoList"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="ac-button ac-button-danger" onclick="edDeleteDataset('rosco')">Eliminar</button>
+        <button class="ac-button" onclick="edSaveDataset('rosco')">Guardar</button>
+        <button class="ac-button" onclick="closeRoscoEditModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pantalla de resultados -->
+  <div class="screen" id="resultsScreen">
+    <div class="screen-header">
+      <div style="width:42px"></div>
+      <h2 class="screen-title" id="resultsTitleHeader">Resultados</h2>
+      <div style="width:42px"></div>
+    </div>
+    <div class="results-container">
+      <h2 class="results-title" id="resultsTitle">Resultados</h2>
+      <div class="results-card">
+        <div class="results-score" id="resultsFinalScore">0</div>
+        <p class="results-label">puntos</p>
+        <div class="results-details" id="resultsDetails"></div>
+      </div>
+      <div class="results-stars" id="resultsStars"></div>
+      <div class="results-message" id="resultsMessage"></div>
+      <div class="results-actions">
+        <button class="ac-button" onclick="goHome()">Menu Principal</button>
+        <button class="ac-button" id="retryBtn" onclick="retryGame()">Reintentar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio para efectos de sonido -->
+  <audio id="sfxCorrect" preload="auto"></audio>
+  <audio id="sfxWrong" preload="auto"></audio>
+  <audio id="sfxTick" preload="auto"></audio>
+  <audio id="sfxWin" preload="auto"></audio>
+
+  <script src="js/env.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/canciones.js"></script>
+  <script src="js/palabras.js"></script>
+  <script src="js/rosco.js"></script>
+  <script src="js/millon.js"></script>
+  <script src="js/characters.js"></script>
+</body>
+</html>
