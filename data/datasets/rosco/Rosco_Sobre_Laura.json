@@ -1,168 +1,168 @@
 {
-  "tiempoSegundos": 180,
-  "maxFallos": 3,
+  "tiempoSegundos": 270,
+  "maxFallos": 27,
   "preguntas": [
     {
       "letra": "A",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que le pongo casi siempre a mi tostadas por la mañana",
+      "respuesta": "Aguacate"
     },
     {
       "letra": "B",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Primera canción que escuche en youtube",
+      "respuesta": "Baby"
     },
     {
       "letra": "C",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Cantante mujer de trap que me gustaba de peque",
+      "respuesta": "Cazzu"
     },
     {
       "letra": "D",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Primer juego de mesa que me enseño mi abuelo a jugar",
+      "respuesta": "Domino"
     },
     {
       "letra": "E",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Piedra que me gustaría tener en mi anillo de pedida",
+      "respuesta": "Esmeralda"
     },
     {
       "letra": "F",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que me subía siempre en el colegio refiriedo al uniforme",
+      "respuesta": "Falda"
     },
     {
       "letra": "G",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Continua la frase... Y reina y reina y ....",
+      "respuesta": "Guapa"
     },
     {
       "letra": "H",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Primer deporte que jugué",
+      "respuesta": "Hockey"
     },
     {
       "letra": "I",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Asignatura que nunca se me dio bien",
+      "respuesta": "Inglés"
     },
     {
       "letra": "J",
-      "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "tipo": "contiene",
+      "definicion": "Pelicula romantica de roma que me he visto mil veces",
+      "respuesta": "Cartas a Julieta"
     },
     {
       "letra": "K",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Dibujos que antes hacia y son muy cuquis",
+      "respuesta": "Kawaii"
     },
     {
       "letra": "L",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Mi playa favorita de Cantabria",
+      "respuesta": "Laredo"
     },
     {
       "letra": "M",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Dia de Vogue que siempre vamos juntitos",
+      "respuesta": "Mercado de las flores"
     },
     {
       "letra": "N",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Mi pelicula favorita de fantasia",
+      "respuesta": "Narnia"
     },
     {
       "letra": "Ñ",
-      "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "tipo": "contiene",
+      "definicion": "Como me defino si soy muy cariñosa con alguien",
+      "respuesta": "Moñas"
     },
     {
       "letra": "O",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Flores que me gustaría alguna vez tener en casa",
+      "respuesta": "Orquídeas"
     },
     {
       "letra": "P",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que otro nombre me querían poner",
+      "respuesta": "Paula"
     },
     {
       "letra": "Q",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "No me canso de comerlo y ponerlo en cualquier plato",
+      "respuesta": "Queso"
     },
     {
       "letra": "R",
-      "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "tipo": "contiene",
+      "definicion": "Actividad que quiero hacer alguna vez en mi vida en mar",
+      "respuesta": "Bucear"
     },
     {
       "letra": "S",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "La serie española que me vi entera que salió cuando nací",
+      "respuesta": "Serrano"
     },
     {
       "letra": "T",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Parte de mi cuerpo q casi me lesiono pero soy de goma",
+      "respuesta": "Tobillo"
     },
     {
       "letra": "U",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que comía debajo de la mesa que dicen que se consigue novio",
+      "respuesta": "Uvas"
     },
     {
       "letra": "V",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Apellido de uno de mis pintores favoritos",
+      "respuesta": "Van Gogh"
     },
     {
       "letra": "W",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Deporte en el mar que me gustaría repetir",
+      "respuesta": "Windsurf"
     },
     {
       "letra": "X",
-      "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "tipo": "contiene",
+      "definicion": "En que año me cambie de colegio",
+      "respuesta": "Sexto"
     },
     {
       "letra": "Y",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que quiero ser de mayor Mami ...",
+      "respuesta": "Yoga"
     },
     {
       "letra": "Z",
       "tipo": "empieza",
-      "definicion": "",
-      "respuesta": ""
+      "definicion": "Que cosa si la desayuno es un muy buen desayuno y pasa poco",
+      "respuesta": "Zumo"
     }
   ]
 }
