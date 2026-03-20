@@ -5,6 +5,9 @@ const { spawn } = require('child_process');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const SONGS_AUDIO_DIR = process.env.SONGS_AUDIO_DIR || path.join(PUBLIC_DIR, 'audio', 'canciones');
 
 // Basic CORS for split frontend/backend deployments (GitHub Pages + Render)
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
@@ -37,7 +40,10 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(PUBLIC_DIR));
+// When SONGS_AUDIO_DIR points outside /public (e.g. Render persistent disk),
+// explicitly expose it under /audio/canciones.
+app.use('/audio/canciones', express.static(SONGS_AUDIO_DIR));
 
 /* ---------- HELPER: ensure directory ---------- */
 function ensureDir(dir) {
@@ -54,12 +60,12 @@ function listFiles(dir, filter) {
 
 // Images backgrounds
 app.get('/api/images', (req, res) => {
-  res.json(listFiles(path.join(__dirname, 'public', 'img', 'backgrounds')));
+  res.json(listFiles(path.join(PUBLIC_DIR, 'img', 'backgrounds')));
 });
 
 // Video wallpapers
 app.get('/api/videos', (req, res) => {
-  const files = listFiles(path.join(__dirname, 'public', 'video-wallpaper'), f => /\.(mp4|webm|ogg)$/i.test(f));
+  const files = listFiles(path.join(PUBLIC_DIR, 'video-wallpaper'), f => /\.(mp4|webm|ogg)$/i.test(f));
   const videos = files.map(f => ({
     file: f,
     name: path.parse(f).name,
@@ -70,7 +76,7 @@ app.get('/api/videos', (req, res) => {
 
 // Characters list (filename without extension as name)
 app.get('/api/characters', (req, res) => {
-  const dir = path.join(__dirname, 'public', 'img', 'characters');
+  const dir = path.join(PUBLIC_DIR, 'img', 'characters');
   const files = listFiles(dir);
   const chars = files.map(f => ({ file: f, name: path.parse(f).name }));
   res.json(chars);
@@ -78,7 +84,7 @@ app.get('/api/characters', (req, res) => {
 
 // Users list
 app.get('/api/users', (req, res) => {
-  const dir = path.join(__dirname, 'public', 'img', 'users');
+  const dir = path.join(PUBLIC_DIR, 'img', 'users');
   const files = listFiles(dir);
   const users = files.map(f => ({ file: f, name: path.parse(f).name }));
   res.json(users);
@@ -86,13 +92,13 @@ app.get('/api/users', (req, res) => {
 
 // Audios
 app.get('/api/audios', (req, res) => {
-  res.json(listFiles(path.join(__dirname, 'public', 'audio')));
+  res.json(listFiles(path.join(PUBLIC_DIR, 'audio')));
 });
 
 /* ---------- MAIN CONFIG ---------- */
 app.get('/api/config', (req, res) => {
   try {
-    const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'game-config.json'), 'utf8'));
+    const config = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'game-config.json'), 'utf8'));
     res.json(config);
   } catch (err) {
     res.status(500).json({ error: 'Error leyendo la configuración' });
@@ -101,8 +107,9 @@ app.get('/api/config', (req, res) => {
 
 app.post('/api/config', (req, res) => {
   try {
+    ensureDir(DATA_DIR);
     fs.writeFileSync(
-      path.join(__dirname, 'data', 'game-config.json'),
+      path.join(DATA_DIR, 'game-config.json'),
       JSON.stringify(req.body, null, 2), 'utf8'
     );
     res.json({ success: true });
@@ -112,7 +119,7 @@ app.post('/api/config', (req, res) => {
 });
 
 /* ---------- DATASETS ---------- */
-const datasetsDir = path.join(__dirname, 'data', 'datasets');
+const datasetsDir = path.join(DATA_DIR, 'datasets');
 
 // List datasets for a game type
 app.get('/api/datasets/:gameType', (req, res) => {
@@ -164,7 +171,7 @@ app.delete('/api/datasets/:gameType/:id', (req, res) => {
 });
 
 /* ---------- LEADERBOARD ---------- */
-const scoresFile = path.join(__dirname, 'data', 'scores.json');
+const scoresFile = path.join(DATA_DIR, 'scores.json');
 
 function loadScores() {
   try {
@@ -224,7 +231,7 @@ app.post('/api/songs/process', (req, res) => {
   }
 
   // Carpeta temporal para descargas
-  const carpeta = path.join(__dirname, 'data', 'canciones_temp');
+  const carpeta = path.join(DATA_DIR, 'canciones_temp');
   ensureDir(carpeta);
 
   // Ejecutar el script Python
@@ -269,7 +276,7 @@ app.post('/api/songs/process', (req, res) => {
 
       if (resultado.exito) {
         // Mover archivos de audio a carpeta pública
-        const audioDir = path.join(__dirname, 'public', 'audio', 'canciones');
+        const audioDir = SONGS_AUDIO_DIR;
         ensureDir(audioDir);
         
         const nombreBase = resultado.archivo_mp3.split(path.sep).pop().replace('.mp3', '');
