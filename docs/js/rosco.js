@@ -24,6 +24,14 @@ let roscoIsRecording = false;
 let roscoLastViewportWidth = window.innerWidth;
 let roscoLastViewportHeight = window.innerHeight;
 
+function isTouchDevice() {
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(pointer: coarse)').matches;
+}
+
+function shouldAutoFocusRoscoInput() {
+  return !isTouchDevice();
+}
+
 function initVoiceRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) return null;
@@ -39,7 +47,7 @@ function initVoiceRecognition() {
     const input = document.getElementById('roscoInput');
     if (input) {
       input.value = transcript;
-      input.focus();
+      if (shouldAutoFocusRoscoInput()) input.focus();
     }
     stopVoiceRecording();
   };
@@ -322,7 +330,7 @@ function renderRosco() {
       </div>
     `;
 
-    if (!isTablet) {
+    if (shouldAutoFocusRoscoInput()) {
       setTimeout(() => {
         const input = document.getElementById('roscoInput');
         if (input) input.focus();
@@ -412,7 +420,7 @@ function renderRosco() {
   container.innerHTML = '<div class="rosco-glass-container">' + wheelHTML + countersHTML + inputHTML + '</div>';
 
   // Focus input only on desktop to avoid virtual keyboard loops on tablets.
-  if (!isTablet) {
+  if (shouldAutoFocusRoscoInput()) {
     setTimeout(() => {
       const input = document.getElementById('roscoInput');
       if (input) input.focus();
@@ -579,17 +587,16 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
     if (currentGame === 'rosco' && !roscoState.finished) {
-      const activeEl = document.activeElement;
-      const isInputFocused = !!activeEl && activeEl.id === 'roscoInput';
       const widthDelta = Math.abs(window.innerWidth - roscoLastViewportWidth);
       const heightDelta = Math.abs(window.innerHeight - roscoLastViewportHeight);
+      const keyboardLikeResize = isTouchDevice() && widthDelta < 120 && heightDelta > 60;
 
       roscoLastViewportWidth = window.innerWidth;
       roscoLastViewportHeight = window.innerHeight;
 
-      // On mobile/tablet, opening/closing virtual keyboard triggers resize.
-      // Skip rerender in that case to prevent focus loops.
-      if (isInputFocused && widthDelta < 20 && heightDelta > 80) return;
+      // On touch devices, opening/closing virtual keyboard triggers viewport resize.
+      // Skip rerender in that case to avoid keyboard flicker loops.
+      if (keyboardLikeResize) return;
 
       renderRosco();
       initRoscoTabletView();
