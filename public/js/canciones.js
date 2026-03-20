@@ -203,9 +203,12 @@ function nextCancionHint() {
   }
 }
 
-function submitCancionRespuesta(puntosDisponibles) {
+function submitCancionRespuesta(puntosDisponibles, options = {}) {
   if (cancionesState.timer) clearInterval(cancionesState.timer);
   stopAllAudios();
+
+  const reason = options.reason || 'manual';
+  const timeout = reason === 'timeout';
 
   const cancion = cancionesState.pistas[cancionesState.currentIndex];
   if (!cancion) return;
@@ -238,7 +241,7 @@ function submitCancionRespuesta(puntosDisponibles) {
         ${correcta
           ? `Correcto! +${puntosDisponibles} puntos`
           : (hayMasPistas
-              ? `Incorrecto. Pasamos a la pista ${cancionesState.pistaActual + 1}.`
+              ? `${timeout ? 'Tiempo agotado.' : 'Incorrecto.'} Pasamos a la pista ${cancionesState.pistaActual + 1}.`
               : `Incorrecto. La respuesta era: <strong>${escapeHtml(cancion.respuesta || '')}</strong>`)}
       </div>
     `;
@@ -269,7 +272,7 @@ function startCancionesTimer() {
 
     if (left <= 0) {
       clearInterval(cancionesState.timer);
-      submitCancionRespuesta(0);
+      submitCancionRespuesta(0, { reason: 'timeout' });
     }
   }, 1000);
 }
