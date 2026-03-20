@@ -21,6 +21,8 @@ let roscoState = {
 /* ---------- VOICE RECOGNITION ---------- */
 let roscoRecognition = null;
 let roscoIsRecording = false;
+let roscoLastViewportWidth = window.innerWidth;
+let roscoLastViewportHeight = window.innerHeight;
 
 function initVoiceRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -287,7 +289,7 @@ function renderRosco() {
             <button class="rosco-pasapalabra-btn" onclick="pasapalabraAction()">Pasapalabra</button>
             <input type="text" class="rosco-input" id="roscoInput"
               placeholder="Escribe tu respuesta..."
-              autocomplete="off" autofocus>
+              autocomplete="off">
             <button class="rosco-voice-btn" id="roscoSpeakBtn" onclick="speakDefinition()" title="Escuchar pista">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -320,10 +322,12 @@ function renderRosco() {
       </div>
     `;
 
-    setTimeout(() => {
-      const input = document.getElementById('roscoInput');
-      if (input) input.focus();
-    }, 100);
+    if (!isTablet) {
+      setTimeout(() => {
+        const input = document.getElementById('roscoInput');
+        if (input) input.focus();
+      }, 100);
+    }
 
     return;
   }
@@ -390,7 +394,7 @@ function renderRosco() {
           <button class="rosco-pasapalabra-btn" onclick="pasapalabraAction()">Pasapalabra</button>
           <input type="text" class="rosco-input" id="roscoInput"
             placeholder="Escribe tu respuesta..."
-            autocomplete="off" autofocus>
+            autocomplete="off">
           <button class="rosco-voice-btn" id="roscoSpeakBtn" onclick="speakDefinition()" title="Escuchar pista">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -407,11 +411,13 @@ function renderRosco() {
 
   container.innerHTML = '<div class="rosco-glass-container">' + wheelHTML + countersHTML + inputHTML + '</div>';
 
-  // Focus input
-  setTimeout(() => {
-    const input = document.getElementById('roscoInput');
-    if (input) input.focus();
-  }, 100);
+  // Focus input only on desktop to avoid virtual keyboard loops on tablets.
+  if (!isTablet) {
+    setTimeout(() => {
+      const input = document.getElementById('roscoInput');
+      if (input) input.focus();
+    }, 100);
+  }
 }
 
 function getWheelRadius() {
@@ -573,6 +579,18 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
     if (currentGame === 'rosco' && !roscoState.finished) {
+      const activeEl = document.activeElement;
+      const isInputFocused = !!activeEl && activeEl.id === 'roscoInput';
+      const widthDelta = Math.abs(window.innerWidth - roscoLastViewportWidth);
+      const heightDelta = Math.abs(window.innerHeight - roscoLastViewportHeight);
+
+      roscoLastViewportWidth = window.innerWidth;
+      roscoLastViewportHeight = window.innerHeight;
+
+      // On mobile/tablet, opening/closing virtual keyboard triggers resize.
+      // Skip rerender in that case to prevent focus loops.
+      if (isInputFocused && widthDelta < 20 && heightDelta > 80) return;
+
       renderRosco();
       initRoscoTabletView();
     }
