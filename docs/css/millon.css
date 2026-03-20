@@ -306,6 +306,39 @@
   justify-content: center;
 }
 
+@media (min-width: 769px) and (max-width: 1180px) and (pointer: coarse) {
+  .millon-container {
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  .millon-presenter-wrap {
+    grid-template-columns: 150px 1fr;
+    gap: 10px;
+  }
+
+  .millon-presenter-avatar img {
+    max-width: 100px;
+  }
+
+  .millon-options {
+    gap: 10px;
+  }
+
+  .millon-option {
+    padding: 10px;
+  }
+
+  .millon-option-title {
+    font-size: 0.95rem;
+  }
+
+  .millon-mini {
+    font-size: 0.76rem;
+    padding: 7px 8px;
+  }
+}
+
 @media (max-width: 768px) {
   .millon-presenter-wrap {
     grid-template-columns: 130px 1fr;

@@ -154,6 +154,34 @@
   color: var(--ac-red);
 }
 
+@media (min-width: 769px) and (max-width: 1180px) and (pointer: coarse) {
+  .canciones-container {
+    max-width: 96%;
+    padding: 24px;
+  }
+
+  .cancion-pista-text {
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+
+  .cancion-opcion {
+    font-size: 0.98rem;
+    padding: 14px 10px;
+  }
+
+  .canciones-btn {
+    min-width: 136px;
+    font-size: 0.9rem;
+    padding: 9px 14px;
+  }
+
+  #cancionRespuesta {
+    font-size: 0.96rem !important;
+    padding: 10px 12px !important;
+  }
+}
+
 /* Tablet (768px) - improved */
 @media (max-width: 768px) {
   .canciones-container {

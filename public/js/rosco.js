@@ -32,6 +32,11 @@ function shouldAutoFocusRoscoInput() {
   return !isTouchDevice();
 }
 
+function isRoscoTabletViewport() {
+  if (window.matchMedia('(max-width: 768px)').matches) return true;
+  return window.matchMedia('(max-width: 1100px) and (pointer: coarse)').matches;
+}
+
 function initVoiceRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) return null;
@@ -98,7 +103,7 @@ function initRoscoTabletView() {
     avatarImg.src = avatarSrc;
   }
 
-  if (window.matchMedia('(max-width: 768px)').matches) {
+  if (isRoscoTabletViewport()) {
     // En tablet arrancamos mostrando Canela + definición
     roscoState.tabletView = 'definition';
     layout.classList.remove('tablet-view-rosco');
@@ -112,7 +117,7 @@ function initRoscoTabletView() {
 
 function toggleRoscoTabletView(view) {
   const layout = document.getElementById('roscoLayout');
-  if (!layout || !window.matchMedia('(max-width: 768px)').matches) return;
+  if (!layout || !isRoscoTabletViewport()) return;
 
   if (view === 'rosco') {
     roscoState.tabletView = 'rosco';
@@ -259,7 +264,7 @@ function renderRosco() {
   const container = document.getElementById('roscoContent');
   if (!container) return;
 
-  const isTablet = window.matchMedia('(max-width: 768px)').matches;
+  const isTablet = isRoscoTabletViewport();
   const showDefinitionInGlass = isTablet && roscoState.tabletView === 'definition';
 
   if (showDefinitionInGlass) {

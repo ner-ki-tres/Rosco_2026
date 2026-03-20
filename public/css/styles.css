@@ -1704,6 +1704,70 @@ body {
    RESPONSIVE — Tablet (768px)
    ========================================== */
 
+@media (min-width: 769px) and (max-width: 1180px) and (pointer: coarse) {
+  .screen {
+    padding: 14px;
+  }
+
+  .screen-header {
+    padding: 6px 14px;
+  }
+
+  .screen-title {
+    font-size: 1.35rem;
+  }
+
+  .screen-back-arrow,
+  .screen-action-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .screen-score-pill {
+    font-size: 1rem;
+    padding: 7px 12px;
+  }
+
+  .game-select-panel {
+    max-width: 98%;
+    max-height: 92vh;
+    padding: 0 16px 18px;
+  }
+
+  .game-cards-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0 6px;
+  }
+
+  .game-card {
+    padding: 12px 12px 10px;
+  }
+
+  .game-card-img {
+    max-width: 170px;
+    height: 92px;
+  }
+
+  .game-content {
+    max-width: 100%;
+    padding: 10px 14px;
+  }
+
+  .results-card {
+    padding: 26px;
+  }
+
+  .results-score {
+    font-size: 3.8rem;
+  }
+
+  .modal-box {
+    max-width: 92vw;
+    max-height: 88vh;
+  }
+}
+
 @media (max-width: 768px) {
   .splash-title { font-size: 3rem; }
   .splash-subtitle { font-size: 1.8rem; }

@@ -352,6 +352,41 @@
   animation: pulse 0.5s ease-in-out infinite;
 }
 
+@media (min-width: 769px) and (max-width: 1180px) and (pointer: coarse) {
+  .palabras-container {
+    max-width: 96%;
+    padding: 24px;
+  }
+
+  .palabras-game-layout {
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .palabras-canela-side {
+    flex-basis: 130px;
+  }
+
+  .palabras-canela-img {
+    width: 104px;
+  }
+
+  .palabras-main-side {
+    padding: 18px;
+  }
+
+  .palabras-grid {
+    max-width: 380px;
+    gap: 11px;
+  }
+
+  .palabra-card,
+  .flip-card-back,
+  .flip-card-front {
+    font-size: 0.98rem;
+  }
+}
+
 /* ==========================================
    RESPONSIVE
    ========================================== */

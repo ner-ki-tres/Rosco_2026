@@ -471,7 +471,7 @@
 }
 
 /* En tablet: mostrar overlay de avatar en vista de definición */
-@media (max-width: 768px) {
+@media (max-width: 768px), (max-width: 1100px) and (pointer: coarse) {
   .rosco-layout.tablet-view-definition .rosco-tablet-avatar-overlay {
     opacity: 1;
     pointer-events: auto;
@@ -502,7 +502,7 @@
 }
 
 /* ---------- RESPONSIVE ---------- */
-@media (max-width: 768px) {
+@media (max-width: 768px), (max-width: 1100px) and (pointer: coarse) {
   .rosco-layout {
     flex-direction: column;
     padding: 0 10px 10px;
