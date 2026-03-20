@@ -1,0 +1,582 @@
+/* ==========================================
+   EL ROSCO FINAL — Professional Redesign
+   ========================================== */
+
+/* Header now uses unified .screen-header system from styles.css */
+
+/* ---------- MAIN LAYOUT ---------- */
+.rosco-layout {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+  padding: 0 24px 16px;
+  animation: fadeIn 0.5s ease-out;
+  align-items: center;
+  position: relative;
+}
+
+.rosco-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: 16px;
+}
+
+.rosco-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ---------- CANELA (right column) ---------- */
+.rosco-canela-container {
+  display: flex;
+  justify-content: center;
+}
+
+.rosco-canela-img {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+  animation: canelaBob 3s ease-in-out infinite;
+}
+
+@keyframes canelaBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ---------- DEFINITION BOX (right column) ---------- */
+.rosco-definition-box {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 24px 28px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  border: none;
+  position: relative;
+}
+
+.rosco-def-letter {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--ac-yellow-dark);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.06);
+  margin-bottom: 2px;
+  line-height: 1;
+}
+
+.rosco-def-tipo {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ac-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.rosco-def-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ac-text);
+  line-height: 1.55;
+}
+
+.rosco-tts-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ac-blue-light);
+  color: var(--ac-blue-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.rosco-tts-btn:hover {
+  background: var(--ac-blue);
+  color: #fff;
+  transform: scale(1.1);
+}
+.rosco-tts-btn:active {
+  transform: scale(0.95);
+}
+
+/* ---------- TTS VOICE SETTINGS ---------- */
+.rosco-tts-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 340px;
+}
+.rosco-tts-settings label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.rosco-voice-select {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ac-text);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+.rosco-voice-select:hover {
+  background: rgba(255,255,255,0.95);
+}
+
+/* ---------- ROSCO WHEEL ---------- */
+.rosco-glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.rosco-wheel {
+  position: relative;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+/* ---------- AVATAR CIRCLE (center of wheel) ---------- */
+.rosco-avatar-circle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid var(--ac-yellow-dark);
+  background: var(--ac-cream);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+.rosco-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- SCORE COUNTERS (below wheel, inline) ---------- */
+.rosco-counters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.rosco-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+.rosco-counter.timer {
+  background: rgba(0, 168, 232, 0.92);
+  font-size: 1.3rem;
+  padding: 10px 22px;
+}
+.rosco-counter.aciertos {
+  background: rgba(120, 200, 0, 0.92);
+}
+.rosco-counter.fallos {
+  background: rgba(231, 76, 60, 0.92);
+}
+.rosco-counter svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ---------- LETTER CIRCLES ---------- */
+.rosco-letter {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--ac-text);
+  background: rgba(255, 255, 255, 0.92);
+  border: 2.5px solid rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: default;
+}
+
+.rosco-letter.current {
+  background: var(--ac-yellow);
+  border-color: var(--ac-yellow-dark);
+  transform: scale(1.25);
+  box-shadow: 0 0 20px rgba(245, 215, 110, 0.6), 0 4px 12px rgba(0,0,0,0.12);
+  z-index: 5;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.rosco-letter.correct {
+  background: var(--ac-green);
+  border-color: var(--ac-green-dark);
+  color: white;
+}
+
+.rosco-letter.wrong {
+  background: var(--ac-red);
+  border-color: #c0392b;
+  color: white;
+}
+
+.rosco-letter.pasapalabra {
+  background: var(--ac-orange);
+  border-color: #c07030;
+  color: white;
+}
+
+/* ---------- INPUT ZONE ---------- */
+.rosco-input-zone {
+  width: 100%;
+  max-width: 540px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  padding: 14px 18px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+  backdrop-filter: blur(12px);
+  flex-shrink: 0;
+}
+
+.rosco-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rosco-pasapalabra-btn {
+  order: 1;
+  background: var(--ac-orange);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 0 #c07030;
+  white-space: nowrap;
+}
+
+.rosco-pasapalabra-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 #c07030;
+}
+.rosco-pasapalabra-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #c07030;
+}
+
+.rosco-input {
+  order: 2;
+  flex: 1;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 12px 16px;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ac-text);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  min-width: 0;
+}
+
+.rosco-input:focus {
+  border-color: var(--ac-blue);
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.25);
+}
+
+.rosco-input::placeholder {
+  color: #bbb;
+  font-weight: 600;
+}
+
+/* ---------- VOICE INPUT BUTTON ---------- */
+.rosco-voice-btn {
+  order: 3;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ac-blue-light);
+  color: var(--ac-blue-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+.rosco-voice-btn:hover {
+  background: var(--ac-blue);
+  color: #fff;
+  transform: scale(1.08);
+}
+.rosco-voice-btn:active {
+  transform: scale(0.95);
+}
+.rosco-voice-btn.recording {
+  background: var(--ac-red);
+  color: #fff;
+  animation: voicePulse 1s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+}
+
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+}
+
+.rosco-submit-btn {
+  order: 4;
+  background: var(--ac-green);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 0 var(--ac-green-dark);
+  white-space: nowrap;
+}
+
+.rosco-submit-btn:hover {
+  background: #6dbf6d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--ac-green-dark);
+}
+.rosco-submit-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--ac-green-dark);
+}
+
+/* Feedback */
+.rosco-feedback {
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-height: 24px;
+  transition: all 0.3s ease;
+}
+.rosco-feedback.correct { color: var(--ac-green-dark); }
+.rosco-feedback.wrong   { color: var(--ac-red); }
+
+/* ---------- TABLET VIEW TOGGLE ---------- */
+.rosco-tablet-avatar-overlay,
+.rosco-tablet-canela-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 50;
+  border-radius: 999px;
+}
+
+.rosco-tablet-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--ac-text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 6px 10px 6px 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+  border: 2px solid rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.rosco-tablet-toggle-btn:hover {
+  transform: translateY(-1px);
+}
+
+.rosco-tablet-avatar-btn,
+.rosco-tablet-canela-btn {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--ac-yellow-dark);
+  background: var(--ac-cream);
+}
+
+/* En tablet: mostrar overlay de avatar en vista de definición */
+@media (max-width: 768px) {
+  .rosco-layout.tablet-view-definition .rosco-tablet-avatar-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .rosco-layout.tablet-view-definition .rosco-tablet-canela-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* En tablet: vista de rosco, ocultar definición, mostrar canela overlay */
+  .rosco-layout.tablet-view-rosco .rosco-left {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .rosco-layout.tablet-view-rosco .rosco-tablet-canela-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .rosco-layout.tablet-view-rosco .rosco-tablet-avatar-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .rosco-layout {
+    flex-direction: column;
+    padding: 0 10px 10px;
+    gap: 16px;
+  }
+  .rosco-left { 
+    width: 100%; 
+    align-items: center;
+  }
+  .rosco-right { display: none; }
+  .rosco-layout.tablet-view-definition .rosco-left,
+  .rosco-layout.tablet-view-rosco .rosco-left {
+    min-height: calc(100vh - 170px);
+    justify-content: center;
+  }
+  .rosco-canela-container {
+    flex: 0 0 auto;
+    width: 120px;
+  }
+  .rosco-canela-img { 
+    width: 100px; 
+    height: 110px;
+  }
+  .rosco-definition-box { 
+    max-width: 100%; 
+    padding: 18px; 
+    min-height: auto;
+  }
+  .rosco-def-letter { font-size: 2.2rem; }
+  .rosco-def-text { font-size: 1.05rem; line-height: 1.5; }
+  .rosco-circle { max-width: 300px; }
+  .rosco-letter { width: 36px; height: 36px; font-size: 0.88rem; }
+  .rosco-input-zone { padding: 14px; }
+  .rosco-input { font-size: 1.05rem; padding: 12px 16px; }
+  .rosco-avatar-circle { width: 90px; height: 90px; }
+  .rosco-counter { font-size: 0.98rem; padding: 8px 14px; }
+  .rosco-counter.timer { font-size: 1.2rem; padding: 10px 18px; }
+  .rosco-glass-container { padding: 20px; border-radius: 24px; }
+  .rosco-tts-settings { max-width: 100%; }
+
+  .rosco-glass-container-definition {
+    min-height: 420px;
+  }
+
+  .rosco-tablet-definition-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .rosco-tablet-canela-inline {
+    width: 130px;
+    height: auto;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+  }
+
+  .rosco-definition-box-inline {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rosco-letter { width: 28px; height: 28px; font-size: 0.72rem; border-width: 2px; }
+  .rosco-input-row { flex-wrap: wrap; }
+  .rosco-pasapalabra-btn, .rosco-submit-btn { flex: 1; }
+  .rosco-voice-btn { width: 38px; height: 38px; }
+  .rosco-canela-img { width: 60px; }
+  .rosco-def-letter { font-size: 1.6rem; }
+  .rosco-def-text { font-size: 0.9rem; }
+  .rosco-avatar-circle { width: 60px; height: 60px; }
+  .rosco-counter { font-size: 0.85rem; padding: 5px 10px; }
+  .rosco-counter.timer { font-size: 0.95rem; }
+  .rosco-glass-container { padding: 12px; border-radius: 18px; }
+}

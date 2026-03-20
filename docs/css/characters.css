@@ -1,0 +1,230 @@
+/* ==========================================
+   WALKING CHARACTERS SYSTEM
+   3 characters walking across the bottom
+   ========================================== */
+
+/* Layer that holds walkers, pinned to bottom */
+.walkers-layer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  pointer-events: none;
+  z-index: 100;
+  overflow: visible;
+  /* visibility controlled by JS: startWalkers / stopWalkers */
+}
+
+/* Individual walker */
+.walker {
+  position: absolute;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+  will-change: transform;
+  transition: none; /* animated via JS requestAnimationFrame */
+}
+
+.walker-bubble {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 16px;
+  padding: 8px 14px;
+  max-width: 200px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5a4a3a;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(6px) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.walker-bubble.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.walker-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 8px 0;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.95) transparent transparent;
+}
+
+.walker-sprite {
+  width: 90px;
+  height: 105px;
+  position: relative;
+}
+
+.walker-sprite img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+}
+
+/* Walking bobble animation */
+.walker.walking .walker-sprite {
+  animation: walkerBob 0.45s ease-in-out infinite;
+}
+
+@keyframes walkerBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(1.5deg); }
+  75% { transform: translateY(-4px) rotate(-1.5deg); }
+}
+
+/* Flip sprite when walking right-to-left */
+.walker.facing-left .walker-sprite img {
+  transform: scaleX(-1);
+}
+
+/* Talking animation (replaces bob while speaking) */
+.walker.talking .walker-sprite {
+  animation: walkerTalk 0.15s ease-in-out infinite;
+}
+
+@keyframes walkerTalk {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(2deg); }
+  75% { transform: translateY(-2px) rotate(-2deg); }
+}
+
+.walker-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #5a4a3a;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-top: 2px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  white-space: nowrap;
+}
+
+/* Shadow under walker */
+.walker-shadow {
+  width: 50px;
+  height: 10px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -2px;
+}
+
+/* ==========================================
+   CANELA IN-GAME (rosco, results, etc.)
+   Kept for action images in rosco
+   ========================================== */
+
+/* Animaciones de personajes */
+@keyframes characterBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes characterWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+/* Personajes decorativos en las pantallas */
+.game-character {
+  position: absolute;
+  font-size: 40px;
+  animation: characterBounce 3s ease-in-out infinite;
+  z-index: 5;
+  filter: drop-shadow(2px 3px 3px rgba(0,0,0,0.15));
+}
+
+.character-blathers {
+  bottom: 15%;
+  right: 5%;
+  font-size: 45px;
+  animation-delay: 0.5s;
+}
+
+.character-kk {
+  bottom: 18%;
+  left: 5%;
+  font-size: 42px;
+  animation-delay: 1s;
+}
+
+/* Confetti para celebraciones */
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall 3s ease-out forwards;
+  z-index: 200;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Emoticons flotantes para reacciones */
+.floating-emoji {
+  position: fixed;
+  font-size: 2rem;
+  pointer-events: none;
+  z-index: 150;
+  animation: emojiFloat 2s ease-out forwards;
+}
+
+@keyframes emojiFloat {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Mini personajes para las tarjetas de juego */
+.mini-character {
+  display: inline-block;
+  animation: characterBounce 2s ease-in-out infinite;
+  font-size: 1.5rem;
+}
+
+/* Estrella para puntuación */
+.result-star {
+  display: inline-block;
+  animation: starPop 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes starPop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  70% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}

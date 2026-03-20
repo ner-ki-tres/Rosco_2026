@@ -1,0 +1,323 @@
+/* ==========================================
+   PRUEBA DE CANCIONES — glassmorphic
+   ========================================== */
+
+.canciones-container {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
+  backdrop-filter: blur(12px);
+  border: none;
+}
+
+.cancion-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.cancion-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2.5px solid rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.cancion-dot.current {
+  background: var(--ac-yellow);
+  border-color: var(--ac-yellow-dark);
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(245, 215, 110, 0.5);
+}
+
+.cancion-dot.correct {
+  background: var(--ac-green);
+  border-color: var(--ac-green-dark);
+}
+
+.cancion-dot.wrong {
+  background: var(--ac-red);
+  border-color: #c0392b;
+}
+
+.cancion-pista {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.cancion-numero {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ac-text-light);
+  margin-bottom: 8px;
+}
+
+.cancion-pista-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ac-text);
+  line-height: 1.5;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.cancion-pista-text .music-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.cancion-opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.cancion-opcion {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 18px 15px;
+  border: 2px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--ac-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.cancion-opcion:hover {
+  background: var(--ac-blue-light);
+  border-color: var(--ac-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(91,163,201,0.2);
+}
+
+.cancion-opcion:active {
+  transform: translateY(1px);
+}
+
+.cancion-opcion.selected {
+  background: var(--ac-blue);
+  border-color: var(--ac-blue-dark);
+  color: white;
+}
+
+.cancion-opcion.correct {
+  background: var(--ac-green);
+  border-color: var(--ac-green-dark);
+  color: white;
+  animation: popIn 0.3s ease-out;
+}
+
+.cancion-opcion.wrong {
+  background: var(--ac-red);
+  border-color: #c0392b;
+  color: white;
+  animation: shake 0.5s ease;
+}
+
+.cancion-opcion:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.cancion-resultado {
+  text-align: center;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.cancion-resultado.correcto {
+  background: rgba(120, 200, 0, 0.15);
+  color: var(--ac-green-dark);
+}
+
+.cancion-resultado.incorrecto {
+  background: rgba(231, 76, 60, 0.12);
+  color: var(--ac-red);
+}
+
+/* Tablet (768px) - improved */
+@media (max-width: 768px) {
+  .canciones-container {
+    padding: 24px;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  
+  .cancion-pista-text {
+    font-size: 1.15rem;
+    padding: 18px;
+  }
+  
+  .cancion-opciones {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .cancion-opcion {
+    font-size: 1rem;
+    padding: 16px 12px;
+  }
+  
+  .canciones-btn {
+    min-width: 140px;
+    font-size: 0.95rem;
+    padding: 10px 16px;
+  }
+  
+  #cancionRespuesta {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+/* Mobile (600px and below) */
+@media (max-width: 600px) {
+  .canciones-container {
+    padding: 18px;
+    max-width: 100%;
+  }
+  
+  .cancion-pista-text {
+    font-size: 1.1rem;
+    padding: 14px;
+  }
+  
+  .cancion-opciones {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .cancion-opcion {
+    font-size: 0.95rem;
+    padding: 14px 12px;
+  }
+  
+  .canciones-btn {
+    min-width: 120px;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+  
+  #cancionRespuesta {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================
+   PISTAS PROGRESIVAS - Estilos Adicionales
+   ========================================== */
+
+.cancion-pista-content {
+  animation: slideUp 0.5s ease-out;
+}
+
+.cancion-pista-content audio {
+  border-radius: 12px;
+  background: rgba(124, 179, 124, 0.05);
+  height: 40px;
+}
+
+#cancionRespuesta {
+  transition: all 0.3s ease !important;
+}
+
+#cancionRespuesta:focus {
+  border-color: var(--ac-blue-dark) !important;
+  box-shadow: 0 0 0 3px rgba(91, 163, 201, 0.2) !important;
+  transform: translateY(-2px);
+}
+
+.canciones-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.canciones-btn {
+  min-width: 160px;
+  font-weight: 800;
+}
+
+.canciones-btn-answer {
+  background: linear-gradient(145deg, var(--ac-green) 0%, var(--ac-green-dark) 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(93, 168, 93, 0.35);
+}
+
+.canciones-btn-answer:hover {
+  box-shadow: 0 6px 22px rgba(93, 168, 93, 0.42);
+}
+
+.canciones-btn-next {
+  background: linear-gradient(145deg, var(--ac-orange) 0%, #d8893f 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(216, 137, 63, 0.3);
+}
+
+.canciones-btn-next:hover {
+  box-shadow: 0 6px 22px rgba(216, 137, 63, 0.38);
+}
+
+/* Animaciones */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}

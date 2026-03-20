@@ -1,0 +1,320 @@
+/* ==========================================
+   CHARACTERS.JS - Canela (Isabelle) con voz AC
+   ========================================== */
+
+const characterMessages = {
+  idle: [
+    'Pulsa Ctrl + Enter para pasar palabra en El Rosco',
+    'Buenos días bebuchi, estas preciosa!',
+    'Dale tataa que puedes con todooo!!',
+    'Pero que hermoso y humilde es Nerik, ejem... que día tan agradable que hace',
+    'Puedes escoger los fondos animados en la esquina superior derecha',
+    '¿Sabías que el creador de la prueba `El Rosco` es el mismo que dormirá en el sofá si pierdes?',
+    'Te quiero mucho, como la trucha al trucho',
+    'Buenas soy Arturo pero me puedes llamar Carturo, igual puede que no lo sea jajaja',
+    'Nuevo estudio revela que salir de compras con la bebi puede aumentar tu estilo hasta en un 90%!!',
+    'Queda poquísimo para el viaje a Sevilla! Nos vemos alli hermosos!',
+    'Oye que ganas de un buen gofrito con su nutella... estoy disponible cuando quieras',
+    'Si al final del día de pierna tu corrieras, no tendrias agujetas lumbreras!',
+    'Atrévete con el Gran Desafío y consigue completar El Rosco Final con el tiempo obtenido de las pruebas!!',
+    'Quiere TOOOTOOO de LOOCAAAA PERRA pon la BOCAA!',
+    'Para añadir canciones tendrás que copiar el enlace de la canción en YouTube y esperar su descarga con paciencia',
+    'Desactiva nuestras voces si te resulta molesto en el menú de configuración',
+    'Ay... lo que daría por el boniato frito del Honest Greens...',
+    'Hay dos cosas que siempre se cumplen, los años y que Laura tenga razón'
+  ],
+  correct: [
+    '¡Qué barbaridad! ¿No serás ingeniera verdad?',
+    'Diooos vaya coco gordo!!',
+    'Ni un pelo de tonta, eso es!',
+    'Devoraste reina a ti nadie te despeina!',
+    'Menuda servida de coño!',
+    'Uy a ti te han chivado algo... jajaja',
+    'Al saber jugar le llaman suerte!',
+    'Uyyy que peloteooo! jajaja'
+  ],
+  wrong: [
+    'Ya no me quieres, ya veo...',
+    'A la próxima igual vendría bien prepararse un poco jajaja',
+    'Veeenga igual en esta me he pasado, puede ser',
+    'Roma no se conquisto en dos dias',
+    'Puedes parar de decir que la he cagado? Es que la has cagado tio',
+    'BOOOMBOCLAAT!! Menudo cagadón! jajaja'
+  ]
+};
+
+let speechTimeout = null;
+let acSpeechTimeout = null;
+
+/* ==========================================
+   SISTEMA DE VOZ ANIMAL CROSSING
+   Genera sonidos "babababa" con Web Audio API
+   3 variantes de tono para Canela
+   ========================================== */
+
+let audioCtx = null;
+
+// Audio pool (archivos en public/audio)
+let audioPoolFiles = [];
+const audioBuffers = {}; // cache filename -> AudioBuffer
+
+async function loadAudioPool() {
+  try {
+    const res = await fetch('/api/audios');
+    const files = await res.json();
+    audioPoolFiles = Array.isArray(files) ? files : [];
+  } catch (err) {
+    console.warn('No se pudieron cargar audios:', err);
+    audioPoolFiles = [];
+  }
+}
+
+async function fetchAudioBuffer(filename) {
+  if (audioBuffers[filename]) return audioBuffers[filename];
+  try {
+    const resp = await fetch(`/audio/${encodeURIComponent(filename)}`);
+    const ab = await resp.arrayBuffer();
+    const ctx = getAudioContext();
+    const buf = await ctx.decodeAudioData(ab.slice(0));
+    audioBuffers[filename] = buf;
+    return buf;
+  } catch (err) {
+    console.warn('Error cargando buffer:', filename, err);
+    return null;
+  }
+}
+
+function findZeroCrossing(channelData, startSample, windowSamples, threshold = 0.002) {
+  const len = channelData.length;
+  let end = Math.min(len, startSample + windowSamples);
+  for (let i = startSample; i < end; i++) {
+    if (Math.abs(channelData[i]) < threshold) return i;
+  }
+  // fallback: search backwards a bit
+  let backStart = Math.max(0, startSample - windowSamples);
+  for (let i = startSample; i >= backStart; i--) {
+    if (Math.abs(channelData[i]) < threshold) return i;
+  }
+  return startSample; // give up
+}
+
+async function playAudioFragmentFromPool(textLength) {
+  if (!audioPoolFiles || audioPoolFiles.length === 0) return false;
+  // choose random file
+  const filename = audioPoolFiles[Math.floor(Math.random() * audioPoolFiles.length)];
+  const buf = await fetchAudioBuffer(filename);
+  if (!buf) return false;
+
+  const ctx = getAudioContext();
+  // desired duration proportional to textLength (0.4s min - 2.5s max)
+  const desired = Math.min(2.5, Math.max(0.4, (textLength / 12)));
+  if (desired >= buf.duration) {
+    // play entire buffer
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.02);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + buf.duration - 0.02);
+    src.connect(g); g.connect(ctx.destination);
+    src.start();
+    src.stop(ctx.currentTime + buf.duration);
+    return true;
+  }
+
+  // choose random start that fits
+  const maxStart = Math.max(0, buf.duration - desired - 0.05);
+  let start = Math.random() * maxStart;
+  // convert to samples and align to zero crossing within 50ms
+  const sr = buf.sampleRate;
+  const startSample = Math.floor(start * sr);
+  const windowSamples = Math.floor(0.05 * sr);
+  const channelData = buf.numberOfChannels > 0 ? buf.getChannelData(0) : null;
+  let alignedSample = startSample;
+  if (channelData) {
+    alignedSample = findZeroCrossing(channelData, startSample, windowSamples);
+  }
+  const alignedStart = alignedSample / sr;
+
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  const gain = ctx.createGain();
+  // apply short fade in/out to avoid clicks
+  const now = ctx.currentTime;
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(1.0, now + 0.02);
+  gain.gain.setValueAtTime(1.0, now + desired - 0.03);
+  gain.gain.linearRampToValueAtTime(0, now + desired);
+
+  src.connect(gain); gain.connect(ctx.destination);
+  try {
+    src.start(now, alignedStart, desired);
+    src.stop(now + desired + 0.05);
+    return true;
+  } catch (err) {
+    console.warn('Error tocando fragmento:', err);
+    return false;
+  }
+}
+
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+// Variantes de voz de Canela (agudo y dulce como en AC)
+const voiceVariants = [
+  { baseFreq: 520, freqRange: 120, syllableDuration: 0.08, pauseDuration: 0.03, waveform: 'square' },
+  { baseFreq: 580, freqRange: 100, syllableDuration: 0.07, pauseDuration: 0.025, waveform: 'square' },
+  { baseFreq: 490, freqRange: 140, syllableDuration: 0.09, pauseDuration: 0.035, waveform: 'triangle' }
+];
+
+function playACVoice(textLength) {
+  // If audio files are available, prefer playing a fragment from pool
+  if (audioPoolFiles && audioPoolFiles.length > 0) {
+    playAudioFragmentFromPool(textLength).catch(() => {
+      // fallback to synthetic if fragment play failed
+      playACVoiceSynthetic(textLength);
+    });
+    return;
+  }
+  // fallback synth
+  playACVoiceSynthetic(textLength);
+}
+
+function playACVoiceSynthetic(textLength) {
+  const ctx = getAudioContext();
+  const variant = voiceVariants[Math.floor(Math.random() * voiceVariants.length)];
+
+  // Número de sílabas proporcional al texto (entre 4 y 12)
+  const syllables = Math.min(12, Math.max(4, Math.floor(textLength / 5)));
+  let time = ctx.currentTime + 0.05;
+
+  for (let i = 0; i < syllables; i++) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    // Tipo de onda
+    osc.type = variant.waveform;
+
+    // Frecuencia aleatoria dentro del rango (simula sílabas diferentes)
+    const freq = variant.baseFreq + (Math.random() - 0.5) * variant.freqRange;
+    osc.frequency.setValueAtTime(freq, time);
+    // Pequeño pitch bend dentro de cada sílaba
+    osc.frequency.linearRampToValueAtTime(freq + (Math.random() - 0.5) * 60, time + variant.syllableDuration * 0.7);
+
+    // Filtro paso bajo para suavizar
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1800 + Math.random() * 600, time);
+    filter.Q.setValueAtTime(2, time);
+
+    // Envolvente ADSR simplificada
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(0.15, time + 0.01); // attack
+    gain.gain.setValueAtTime(0.12, time + 0.015); // sustain
+    gain.gain.linearRampToValueAtTime(0, time + variant.syllableDuration); // release
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(time);
+    osc.stop(time + variant.syllableDuration + 0.01);
+
+    time += variant.syllableDuration + variant.pauseDuration + (Math.random() * 0.02);
+  }
+}
+
+/* ==========================================
+   ANIMACIÓN DEL PERSONAJE
+   ========================================== */
+
+function animateCanelaTalking(duration) {
+  const sprite = document.getElementById('canelaSprite');
+  if (!sprite) return;
+
+  sprite.classList.add('talking');
+  setTimeout(() => {
+    sprite.classList.remove('talking');
+  }, duration);
+}
+
+function animateCanelaReaction(type) {
+  const sprite = document.getElementById('canelaSprite');
+  if (!sprite) return;
+
+  sprite.classList.remove('happy', 'sad', 'excited');
+  void sprite.offsetWidth; // force reflow
+  sprite.classList.add(type);
+  setTimeout(() => sprite.classList.remove(type), 1500);
+}
+
+/* ==========================================
+   SISTEMA DE HABLA
+   ========================================== */
+
+function characterSpeak(message) {
+  const bubble = document.getElementById('speechBubble');
+  const text = document.getElementById('speechText');
+
+  if (!bubble || !text) return;
+
+  // Limpiar timeouts previos
+  if (speechTimeout) clearTimeout(speechTimeout);
+  if (acSpeechTimeout) clearTimeout(acSpeechTimeout);
+
+  text.textContent = message;
+  bubble.classList.add('visible');
+
+  // Reproducir voz AC
+  playACVoice(message.length);
+
+  // Animar a Canela hablando
+  const talkDuration = Math.min(1500, Math.max(500, message.length * 30));
+  animateCanelaTalking(talkDuration);
+
+  // Tick character rotation (every 5-10 messages, swap character)
+  if (typeof tickCharacterRotation === 'function') tickCharacterRotation();
+
+  // Ocultar burbuja después de unos segundos
+  speechTimeout = setTimeout(() => {
+    bubble.classList.remove('visible');
+  }, 5000);
+}
+
+// Mensajes aleatorios cada cierto tiempo en la pantalla principal
+let idleInterval = null;
+
+function startIdleMessages() {
+  if (idleInterval) clearInterval(idleInterval);
+  idleInterval = setInterval(() => {
+    if (typeof currentGame !== 'undefined' && currentGame === null) {
+      const msgs = characterMessages.idle;
+      const msg = msgs[Math.floor(Math.random() * msgs.length)];
+      characterSpeak(msg);
+    }
+  }, 15000);
+}
+
+// Click en el personaje
+document.addEventListener('DOMContentLoaded', () => {
+  const character = document.getElementById('characterCanela');
+  if (character) {
+    character.addEventListener('click', () => {
+      const msgs = characterMessages.idle;
+      const msg = msgs[Math.floor(Math.random() * msgs.length)];
+      characterSpeak(msg);
+      animateCanelaReaction('excited');
+    });
+  }
+
+  startIdleMessages();
+  // Cargar pool de audios (si hay archivos en public/audio)
+  loadAudioPool();
+});
